@@ -1,0 +1,33 @@
+﻿@model IEnumerable<testfan2.Models.NationTeam>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nation)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nation)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.NationCode }) |
+            @Html.ActionLink("Details", "Details", new { id=item.NationCode }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.NationCode })
+        </td>
+    </tr>
+}
+
+</table>
