@@ -121,7 +121,7 @@ namespace testfan2.Models
         private const int teamSize = 11;
 
         //Team Id
-        [Key]
+        [Key Column(Order = 0)]
         public int TeamID { get; set; }
 
         //Team Name
@@ -129,12 +129,18 @@ namespace testfan2.Models
         [StringLength(50, MinimumLength = 3)]
         public String TeamName { get; set; }
 
+        [Key, Column(Order = 2)]
         public int CustomerId { get; set; }
         public virtual Customer Customer { get; set; }
 
+        [Key, Column(Order = 1)]
+        public string UserId { get; set; }
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser User { get; set; }
 
-
+        [Key, Column (Order = 3)]
         public int? FantasyLeagueID { get; set; }
+        [ForeignKey("FantasyLeagueID")]
         public virtual FantasyLeague FantasyLeague { get; set; }
 
 
