@@ -1,0 +1,104 @@
+﻿@model testfan2.Models.PlayerRoundStat
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>PlayerRoundStat</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Fixture.HomeTeamNationCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fixture.HomeTeamNationCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Player.PlayerSurname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Player.PlayerSurname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MinutesPlayed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MinutesPlayed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CleanSheet)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CleanSheet)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GoalsConceded)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GoalsConceded)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.goalScored)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.goalScored)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.YellowCarded)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.YellowCarded)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RedCarded)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RedCarded)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsWin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsWin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ManOfTheMatch)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ManOfTheMatch)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

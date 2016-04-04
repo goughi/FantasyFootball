@@ -8,7 +8,8 @@ namespace testfan2.ViewModels
 {
     public class RoundTeamViewModel
     {
+        public int RoundTeamId { get; set; }
         public List<Player> RoundTeamPlayers { get; set; }
-        public decimal teamTotal { get; set; }
+        public int teamTotal { get; set; }
     }
 }

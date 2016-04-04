@@ -3,7 +3,18 @@
 @{
     ViewBag.Title = "Details";
 }
-
+<style type="text/css">
+    table{border-spacing: 1px;}
+    th, td{padding: 5px 30px 5px 10px;
+           font-size: 110%;
+           margin: 1px;
+           background-color: #e0e9f0;
+           border-top: 1px solid #f1f8fe;
+           border-bottom: 1px solid #cbd2d8;
+           border-right: 1px solid #cbd2d8;
+    }
+    
+</style>
 <h2>Details</h2>
 
 <div>
@@ -13,13 +24,50 @@
         <dt>
             @Html.DisplayNameFor(model => model.Nation)
         </dt>
+        <dt>
+
+        </dt>
+
 
         <dd>
             @Html.DisplayFor(model => model.Nation)
         </dd>
+        <dd>
+            <img src="@Url.Content(Model.CrestPath)" alt="Image" width="100" height="100" />
+        </dd>
+        <dd>
 
+        </dd>
     </dl>
 </div>
+<table>
+    <tr class="head">
+        <th></th>
+        <th></th>
+        <th>Position</th>
+        <th>Value</th>
+    </tr>
+    
+        @foreach (var player in Model.Players)
+        {
+            <tr>
+                <th>
+                    @player.PlayerFirstname
+                </th>
+                <th>
+                    @player.PlayerSurname
+                </th>
+                <th>
+                    @player.Position
+                </th>
+                <th>
+                    @player.PlayerValue
+
+                </th>
+            </tr>
+        }
+          
+</table>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.NationCode }) |
     @Html.ActionLink("Back to List", "Index")

@@ -12,54 +12,57 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Round.RoundID)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Venue)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FixtureDate)
+            @Html.DisplayNameFor(model => model.RoundStage)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.HomeTeam)
+            @Html.DisplayNameFor(model => model.HomeTeam.NationCode)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AwayTeam)
+            <text>Score</text>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.HomeTeamScore)
+            @Html.DisplayNameFor(model => model.AwayTeam.NationCode)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AwayTeamScore)
-        </th>
+    
+    
+      
+        
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Round.RoundID)
-        </td>
+
         <td>
             @Html.DisplayFor(modelItem => item.Venue)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.FixtureDate)
+            @Html.DisplayFor(modelItem => item.RoundStage)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.HomeTeam)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AwayTeam)
+            @Html.DisplayFor(modelItem => item.HomeTeam.NationCode)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.HomeTeamScore)
-        </td>
-        <td>
+        <text>-</text>
             @Html.DisplayFor(modelItem => item.AwayTeamScore)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.FixtureId }) |
+            @Html.DisplayFor(modelItem => item.AwayTeam.NationCode)
+        </td>
+    
+       
+        
+        <td>
+            
+            @if (item.gamePlayed == false)
+            {
+            @Html.ActionLink("PlayGame", "PlayGame", new { id = item.FixtureId }) 
+            }
+            else { <text>Full time</text>}|
             @Html.ActionLink("Details", "Details", new { id=item.FixtureId }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.FixtureId })
         </td>

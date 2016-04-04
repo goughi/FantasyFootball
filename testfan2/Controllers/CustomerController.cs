@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using testfan2.Models;
+using testfan2.DAL;
 
 namespace testfan2.Controllers
 {

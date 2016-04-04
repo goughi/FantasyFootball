@@ -1,30 +1,40 @@
-﻿@model IEnumerable<testfan2.Models.Player>
-
+﻿@model PagedList.IPagedList<testfan2.Models.Player>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Players";
+
 }
 
 <h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
+    @using (Html.BeginForm("Index", "Player", FormMethod.Get))
+    {
+    <p>
+        Find by Player Name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+    }
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.PlayerName)
+            Player Name
+            
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Position)
+            @Html.ActionLink("Nation", "Index", new { sortOrder = ViewBag.TeamSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DateOfBirth)
+            @Html.ActionLink("Position", "Index", new { sortOrder = ViewBag.PositionSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PlayerValue)
+            @Html.ActionLink("Value", "Index", new { sortOrder = ViewBag.ValueSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NationCode)
+            @Html.ActionLink("Points", "Index", new { sortOrder = ViewBag.PointsSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th></th>
     </tr>
@@ -32,19 +42,19 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.PlayerName)
+            @Html.DisplayFor(modelItem => item.PlayerSurname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NationTeam.NationCode)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Position)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DateOfBirth)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.PlayerValue)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.NationCode)
+            @Html.DisplayFor(modelItem => item.TotalPoints)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.PlayerID }) |
@@ -55,3 +65,8 @@
 }
 
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

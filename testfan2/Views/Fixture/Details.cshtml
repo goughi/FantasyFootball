@@ -11,11 +11,19 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Round.RoundID)
+            @Html.DisplayNameFor(model => model.AwayTeam.NationCode)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Round.RoundID)
+            @Html.DisplayFor(model => model.AwayTeam.NationCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HomeTeam.NationCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HomeTeam.NationCode)
         </dd>
 
         <dt>
@@ -27,27 +35,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.FixtureDate)
+            @Html.DisplayNameFor(model => model.RoundStage)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.FixtureDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HomeTeam)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HomeTeam)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AwayTeam)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AwayTeam)
+            @Html.DisplayFor(model => model.RoundStage)
         </dd>
 
         <dt>
@@ -65,7 +57,17 @@
         <dd>
             @Html.DisplayFor(model => model.AwayTeamScore)
         </dd>
-
+        <dt>
+            @Html.DisplayNameFor(model => model.AwayTeamScorer)
+        </dt>
+        <dd>
+            @{
+                foreach (var player in Model.AwayTeamScorer)
+                {
+                    @player.PlayerFirstname @:  @player.PlayerSurname <br />
+                }
+            }
+        </dd>
     </dl>
 </div>
 <p>

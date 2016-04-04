@@ -14,6 +14,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Nation)
         </th>
+        <th>
+            Crest
+        </th>
         <th></th>
     </tr>
 
@@ -21,6 +24,9 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Nation)
+        </td>
+        <td>
+            <img src="@Url.Content(item.CrestPath)" alt="Image"width="25" height="25" />
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.NationCode }) |

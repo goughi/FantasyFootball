@@ -6,12 +6,11 @@
 
 <h2>Edit</h2>
 
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
+    <div class="form-horizontal disabled">
         <h4>Fixture</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -20,56 +19,46 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Venue, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.Venue, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Venue, "", new { @class = "text-danger" })
+                @Html.DisplayFor(model => model.Venue)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.FixtureDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.HomeTeamNationCode, "HomeTeamNationCode", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.FixtureDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FixtureDate, "", new { @class = "text-danger" })
+                @Html.DisplayFor(model=>model.HomeTeamNationCode)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.HomeTeam, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.AwayTeamNationCode, "AwayTeamNationCode", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.HomeTeam, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.HomeTeam, "", new { @class = "text-danger" })
+                @Html.DisplayFor(model=>model.AwayTeamNationCode)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.AwayTeam, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.RoundStage, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.AwayTeam, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.AwayTeam, "", new { @class = "text-danger" })
+                @Html.DisplayFor(model => model.RoundStage)
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.HomeTeamScore, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.HomeTeamScore, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-10 ">
+                @Html.HiddenFor(model => model.HomeTeamScore, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.HomeTeamScore, "", new { @class = "text-danger" })
+                @Html.Label("@model.HomeTeamScore")
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.AwayTeamScore, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.AwayTeamScore, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.HiddenFor(model => model.AwayTeamScore, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.AwayTeamScore, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RoundID, "RoundID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("RoundID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RoundID, "", new { @class = "text-danger" })
+                @Html.Label("@model.AwayTeamScore")
             </div>
         </div>
 
@@ -84,7 +73,3 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

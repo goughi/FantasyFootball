@@ -53,6 +53,14 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Stripe.net, Version=5.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Stripe.net.5.2.0\lib\Stripe.net.dll</HintPath>
       <Private>True</Private>
@@ -180,33 +188,89 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NationTeamController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
-    <Compile Include="Controllers\RoundController.cs" />
-    <Compile Include="Controllers\RoundTeamController.cs" />
+    <Compile Include="Controllers\PlayerRoundStatController.cs" />
+    <Compile Include="DAL\FantasyFootballContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201601131126325_Init.cs" />
-    <Compile Include="Migrations\201601131126325_Init.Designer.cs">
-      <DependentUpon>201601131126325_Init.cs</DependentUpon>
+    <Compile Include="Migrations\201603072318246_InitialCreate.cs" />
+    <Compile Include="Migrations\201603072318246_InitialCreate.Designer.cs">
+      <DependentUpon>201603072318246_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603081843561_v2.cs" />
+    <Compile Include="Migrations\201603081843561_v2.Designer.cs">
+      <DependentUpon>201603081843561_v2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603081911014_v3.cs" />
+    <Compile Include="Migrations\201603081911014_v3.Designer.cs">
+      <DependentUpon>201603081911014_v3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603081929271_v4.cs" />
+    <Compile Include="Migrations\201603081929271_v4.Designer.cs">
+      <DependentUpon>201603081929271_v4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603081956301_v5.cs" />
+    <Compile Include="Migrations\201603081956301_v5.Designer.cs">
+      <DependentUpon>201603081956301_v5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603162051296_fixtures.cs" />
+    <Compile Include="Migrations\201603162051296_fixtures.Designer.cs">
+      <DependentUpon>201603162051296_fixtures.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603171354174_fixture6.cs" />
+    <Compile Include="Migrations\201603171354174_fixture6.Designer.cs">
+      <DependentUpon>201603171354174_fixture6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603201256411_player2.cs" />
+    <Compile Include="Migrations\201603201256411_player2.Designer.cs">
+      <DependentUpon>201603201256411_player2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603231702204_statData.cs" />
+    <Compile Include="Migrations\201603231702204_statData.Designer.cs">
+      <DependentUpon>201603231702204_statData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603231742104_seedStat.cs" />
+    <Compile Include="Migrations\201603231742104_seedStat.Designer.cs">
+      <DependentUpon>201603231742104_seedStat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603291521483_playerstat.cs" />
+    <Compile Include="Migrations\201603291521483_playerstat.Designer.cs">
+      <DependentUpon>201603291521483_playerstat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603301326448_fixtureUpdate2.cs" />
+    <Compile Include="Migrations\201603301326448_fixtureUpdate2.Designer.cs">
+      <DependentUpon>201603301326448_fixtureUpdate2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603301455518_stats4.cs" />
+    <Compile Include="Migrations\201603301455518_stats4.Designer.cs">
+      <DependentUpon>201603301455518_stats4.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Fantasy.cs" />
+    <Compile Include="Models\Fixture.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\NationTeam.cs" />
+    <Compile Include="Models\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\FantasyTeamScoreUpdate.cs" />
+    <Compile Include="ViewModels\FixtureIndexData.cs" />
     <Compile Include="ViewModels\RoundTeamRemoveViewModel.cs" />
     <Compile Include="ViewModels\RoundTeamViewModel.cs" />
-    <Compile Include="ViewModels\ViewGks.cs" />
+    <Compile Include="ViewModels\ScorerIndexData.cs" />
+    <Compile Include="ViewModels\ViewPlayers.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\euro2016.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ClassDiagram1.cd" />
@@ -271,22 +335,31 @@
     <Content Include="Views\Player\Details.cshtml" />
     <Content Include="Views\Player\Edit.cshtml" />
     <Content Include="Views\Player\Index.cshtml" />
-    <Content Include="Views\Round\Create.cshtml" />
-    <Content Include="Views\Round\Delete.cshtml" />
-    <Content Include="Views\Round\Details.cshtml" />
-    <Content Include="Views\Round\Edit.cshtml" />
-    <Content Include="Views\Round\Index.cshtml" />
+    <Content Include="Views\FantasyTeam\Create.cshtml" />
+    <Content Include="Views\FantasyTeam\Edit.cshtml" />
+    <Content Include="Views\FantasyTeam\Index.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
+    <Content Include="Views\FantasyTeam\AddTeam.cshtml" />
     <Content Include="Views\Fixture\Create.cshtml" />
     <Content Include="Views\Fixture\Delete.cshtml" />
     <Content Include="Views\Fixture\Details.cshtml" />
     <Content Include="Views\Fixture\Edit.cshtml" />
     <Content Include="Views\Fixture\Index.cshtml" />
-    <Content Include="Views\FantasyTeam\Create.cshtml" />
+    <Content Include="Views\Fixture\PlayGame.cshtml" />
+    <Content Include="Views\PlayerRoundStat\Create.cshtml" />
+    <Content Include="Views\PlayerRoundStat\Delete.cshtml" />
+    <Content Include="Views\PlayerRoundStat\Details.cshtml" />
+    <Content Include="Views\PlayerRoundStat\Edit.cshtml" />
+    <Content Include="Views\PlayerRoundStat\Index.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\redcard.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\yellowcard.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\motm.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\iswin.cshtml" />
+    <Content Include="Views\FantasyTeam\ViewScore.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\" />
-    <Folder Include="Views\RoundTeam\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -297,8 +370,44 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201601131126325_Init.resx">
-      <DependentUpon>201601131126325_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201603072318246_InitialCreate.resx">
+      <DependentUpon>201603072318246_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603081843561_v2.resx">
+      <DependentUpon>201603081843561_v2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603081911014_v3.resx">
+      <DependentUpon>201603081911014_v3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603081929271_v4.resx">
+      <DependentUpon>201603081929271_v4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603081956301_v5.resx">
+      <DependentUpon>201603081956301_v5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603162051296_fixtures.resx">
+      <DependentUpon>201603162051296_fixtures.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603171354174_fixture6.resx">
+      <DependentUpon>201603171354174_fixture6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603201256411_player2.resx">
+      <DependentUpon>201603201256411_player2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603231702204_statData.resx">
+      <DependentUpon>201603231702204_statData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603231742104_seedStat.resx">
+      <DependentUpon>201603231742104_seedStat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603291521483_playerstat.resx">
+      <DependentUpon>201603291521483_playerstat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603301326448_fixtureUpdate2.resx">
+      <DependentUpon>201603301326448_fixtureUpdate2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603301455518_stats4.resx">
+      <DependentUpon>201603301455518_stats4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

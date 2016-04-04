@@ -16,14 +16,14 @@ namespace testfan2.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "The best Euro 2016 Fantasy Football App";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Fantasy Football Euro 2016 contact page.";
 
             return View();
         }

@@ -1,0 +1,35 @@
+﻿
+@model bool?
+
+@{
+    // make use of nullable class attribute values
+    var addSelected = Model.HasValue && Model.Value ? "active" : null;
+    var removeSelected = (Model.HasValue && !Model.Value)
+        || (!Model.HasValue && ViewData.ModelMetadata.IsNullableValueType)
+        ? "active"
+        : null;
+    var noSelection = !Model.HasValue ? "active" : null;
+
+    // get the name of the ID - this is to support multiple fields
+    var htmlField = ViewData.TemplateInfo.HtmlFieldPrefix;
+}
+
+@Html.HiddenFor(model => model)
+
+<div class="btn-group" data-toggle="buttons">
+    <label class="btn btn-default btn-sm glyphicon glyphicon-plus @addSelected">
+        <input type="radio" class="bool-@htmlField" onchange="javascript:$('#@htmlField').val(true);" /> Add
+    </label>
+    <label class="btn btn-default btn-sm glyphicon glyphicon-minus @removeSelected">
+        <input type="radio" class="bool-@htmlField" onchange="javascript:$('#@htmlField').val(false);" /> Remove
+    </label>
+
+    @if (ViewData.ModelMetadata.IsNullableValueType)
+    {
+        <label class="btn btn-info @noSelection">
+            <input type="radio" class="bool-@htmlField" onclick="javascript:$('#@htmlField').val('');" />Do Not Set
+        </label>
+
+    }
+
+</div>
