@@ -6,14 +6,15 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using testfan2.DAL;
+using System.Security.Claims;
 using testfan2.Models;
+using testfan2.ViewModels;
 
 namespace testfan2.Controllers
 {
     public class PlayerRoundStatController : Controller
     {
-        private FantasyFootballContext db = new FantasyFootballContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: PlayerRoundStat
         public ActionResult Index()
@@ -112,6 +113,63 @@ namespace testfan2.Controllers
                 return HttpNotFound();
             }
             return View(playerRoundStat);
+        }
+
+        public ActionResult ShowTeamData(int? fixtureId)
+        {
+            if (fixtureId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            List<RoundTeamViewModel> playerStats = new List<RoundTeamViewModel>();
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            if (claimsIdentity != null)
+            {
+
+                var userIdClaim = claimsIdentity.Claims
+                    .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+
+                if (userIdClaim != null)
+                {
+                    var userIdValue = userIdClaim.Value;
+
+
+                    // var user = User.Identity.GetUserId();
+                    if (userIdValue != null)
+                    {
+                        //var team = new FantasyTeam();
+                        // var stats = db.PlayerRoundStats.ToList().Where(f => f.Fixture.gamePlayed == true && f.Fixture.RoundStage == RoundStage.FirstRound);
+                        var fixtures = db.Fixtures.ToList().Where(f => f.gamePlayed == true && f.RoundStage == RoundStage.FirstRound);
+                        var team = db.FantasyTeams.Include(t => t.Players).Where(t => t.UserId == userIdValue).FirstOrDefault();
+                        if (team != null)
+                        {
+
+                                    foreach (var player in team.Players)
+                                    {
+                                    var stat = db.PlayerRoundStats.ToList().Where(s => s.FixtureId == fixtureId && s.PlayerID == player.PlayerID).SingleOrDefault();
+                                    if (stat != null)
+                                        playerStats.Add(new RoundTeamViewModel
+                                        {
+                                            CleanSheet = stat.CleanSheet, YellowCarded = stat.YellowCarded, RedCarded = stat.RedCarded,
+                                            goalScored = stat.goalScored, GoalsConceded = stat.GoalsConceded, IsWin = stat.IsWin, ManOfTheMatch = stat.ManOfTheMatch, MinutesPlayed = stat.MinutesPlayed,
+                                            PlayerRoundStatID = stat.PlayerRoundStatID, PlayerName = player.PlayerFirstname + ". " + player.PlayerSurname, playerTotal = stat.TotalPoints
+                                        });
+                                       // var teamStats = db.PlayerRoundStats.ToList().Where(st => st.FixtureId == fixtureId && st.PlayerID == player.PlayerID).Single();
+                                    }
+                                    // var teamStats = db.PlayerRoundStats.Where(t=>t.PlayerID == playerIds)
+                                    return View(playerStats.ToList());
+                                
+                            
+                        }
+                    }
+                  
+                }
+            }
+         
+                TempData["Error"] = "Please log in to find your team";
+               return RedirectToAction("Index", "Fixture");
+         
+            
         }
 
         // POST: PlayerRoundStat/Delete/5

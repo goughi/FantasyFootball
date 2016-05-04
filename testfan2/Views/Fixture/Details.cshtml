@@ -3,74 +3,160 @@
 @{
     ViewBag.Title = "Details";
 }
+<style>
+    .actionbox {
+	width:90%;
+padding-top:20px;
+padding:20px; 
+	background-color: #999999;
+	border-left:10px solid #2ecc71;
+	display:inline-block;
+    display:table; max-width:800px;
+	
+	}
+	
+.ashbox{background-color:#34495e;color:white;}
 
+
+.button{
+display: inline-block;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.428571429;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  	font-family:'PT Sans',helvetica;margin: 29px 6px;
+	
+}
+h1 { margin:0; line-height:95px;}
+.button,.button.green{background:#69c773;color:#FFF;-webkit-box-shadow:0 4px 0 0 #51a65f;-moz-box-shadow:0 4px 0 0 #51a65f;box-shadow:0 4px 0 0 #51a65f;}
+
+.floatright {float:right;}
+.floatleft {float:left;}
+
+</style>
 <h2>Details</h2>
 
-<div>
+
     <h4>Fixture</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.AwayTeam.NationCode)
-        </dt>
+    <div class="actionbox ashbox">
 
-        <dd>
-            @Html.DisplayFor(model => model.AwayTeam.NationCode)
-        </dd>
+        @if (Model.Venue == testfan2.Models.Venue.SaintDenis)
+        {
+            
+                <h3>Venue</h3>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.HomeTeam.NationCode)
-        </dt>
+                <img src="~/Images/stadiums/SaintDenis.jpg" alt="Saint Denis Stadium" width="150" height="150" class="floatright">
+                <h3>Saint Denis</h3>
+          
+        }
+        @if (Model.Venue == testfan2.Models.Venue.Marseille)
+        {
+            
+                <h3>Venue</h3>
 
-        <dd>
-            @Html.DisplayFor(model => model.HomeTeam.NationCode)
-        </dd>
+                <img src="~/Images/stadiums/marseille.jpg" alt="Marseille Stadium" width="150" height="150" class="floatright">
+                <h3>Marseille</h3>
+           
+        }
+        @if (Model.Venue == testfan2.Models.Venue.Bordeaux)
+            {
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Venue)
-        </dt>
+            <h3>Venue</h3>
 
-        <dd>
-            @Html.DisplayFor(model => model.Venue)
-        </dd>
+                <img src="~/Images/stadiums/bordeaux.jpg" alt="Bordeaux Stadium" width="100" height="100" class="floatright">
+                <h3>Bordeaux</h3>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.RoundStage)
-        </dt>
+        }
+        @if (Model.Venue == testfan2.Models.Venue.Lyon)
+            {
 
-        <dd>
-            @Html.DisplayFor(model => model.RoundStage)
-        </dd>
+            <h3>Venue</h3>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.HomeTeamScore)
-        </dt>
+                <img src="~/Images/stadiums/lyon.jpg" alt="Lyon Stadium" width="100" height="100" class="floatright">
+                <h3>Lyon</h3>
 
-        <dd>
-            @Html.DisplayFor(model => model.HomeTeamScore)
-        </dd>
+        }
+        @if (Model.Venue == testfan2.Models.Venue.Lens)
+        {
 
-        <dt>
-            @Html.DisplayNameFor(model => model.AwayTeamScore)
-        </dt>
+            <h3>Venue</h3>
 
-        <dd>
-            @Html.DisplayFor(model => model.AwayTeamScore)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.AwayTeamScorer)
-        </dt>
-        <dd>
-            @{
-                foreach (var player in Model.AwayTeamScorer)
+            <img src="~/Images/stadiums/Lens.jpg" alt="Lens Stadium" width="100" height="100" class="floatright">
+            <h3>Lens</h3>
+
+        }
+        @if (Model.Venue == testfan2.Models.Venue.Toulouse)
+        {
+
+            <h3>Venue</h3>
+
+            <img src="~/Images/stadiums/Toulouse.jpg" alt="Toulouse Stadium" width="100" height="100" class="floatright">
+            <h3>Toulouse</h3>
+
+        }
+        @if (Model.Venue == testfan2.Models.Venue.Lille)
+        {
+
+            <h3>Venue</h3>
+
+            <img src="~/Images/stadiums/Lille.jpg" alt="Lille Stadium" width="100" height="100" class="floatright">
+            <h3>Lille</h3>
+
+        }
+        <h1 class="floatleft">@Html.DisplayFor(model => model.HomeTeam.Nation)  @Html.DisplayFor(model => model.HomeTeamScore)<text> --</text>
+          @Html.DisplayFor(model => model.AwayTeamScore) @Html.DisplayFor(model => model.AwayTeam.Nation)</h1>
+
+        @if (Model.RoundStage == 0)
+        {
+        <a  class="button floatright"  @Html.ActionLink("Back to Round", "Index")> </a>
+        }
+        else
+        {
+            <a class="button floatright" @Html.ActionLink("Back to Round", "NextRound", new { round = Model.RoundStage })> </a>
+        }
+
+                @*@Html.DisplayNameFor(model => model.Venue)
+          
+                @Html.DisplayFor(model => model.Venue)*@
+         
+
+
+            
+
+            @*<table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.AwayTeamScorer)
+                </th>
+            </tr>
+                @foreach (var player in Model.AwayTeamScorer)
                 {
-                    @player.PlayerFirstname @:  @player.PlayerSurname <br />
+                    <tr>
+
+                        <td>
+                            @player.PlayerFirstname   @player.PlayerSurname <br />
+                        </td>
+                            }
+                        </tr>
                 }
-            }
-        </dd>
-    </dl>
+
+
+                </table>*@
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.FixtureId }) |
-    @Html.ActionLink("Back to List", "Index")
+<p style="float: left;">
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.FixtureId }) |
+    @Html.ActionLink("Back to List", "Index")*@
 </p>

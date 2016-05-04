@@ -1,4 +1,5 @@
-﻿@{
+﻿@model testfan2.Models.FantasyTeam
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -11,6 +12,23 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <style>
+                .usericon input {
+                    padding-left:25px;
+             }
+             .usericon:before {
+                height: 100%;
+                width: 25px;
+                display: -webkit-box;
+                -webkit-box-pack: center;
+                -webkit-box-align: center;
+                position: absolute;
+                content: "\e008";
+                font-family: 'Glyphicons Halflings';
+                pointer-events: none;
+            }
+              
+    
+    
         .bg-1 {
             background-color: #1abc9c; /* Green */
             color: #ffffff;
@@ -25,26 +43,288 @@
             background-color: #fff; /* White */
             color: #555555;
         }
+     #box1, #box2, #box3 {
+		padding:10px;
+		border:1px solid #bbb;
+		position:absolute;
+		margin-top:10px;
+		height:150px;
+        float:left;
+	}
+     	#box1 {
+		margin-left:12px;
+		width:240px;
+
+	}
+	#box2 {
+		margin-left:244px;
+		width:240px;
+	}
+	#box3 {
+		margin-left:476px;
+		width:242px;
+	}
+        header{
+background-color: #E4DBBF;
+text-align: center;
+padding-top: 12px;
+padding-bottom: 8px;
+margin-top: -11px;
+margin-bottom: -8px;
+border-radius: 10px 10px 0 0;
+color: #DC5B21;
+}
+
+/*input#IRE { 
+
+             background-image: url("Images/Jerseys/IRE.JPG");
+              background-color: greenyellow;
+             background-position: 0 80%;
+             color: black;
+                 text-indent: -9999px;
+                 content: "\e008";
+                 font-family: 'Glyphicons Halflings';
+           
+        }*/
+       input[type=text]{
+margin-bottom: 1px;
+margin-top: 10px;
+width:100%;
+padding: 15px;
+border-radius:5px;
+border:1px solid #383127;
+font-size: small;
+}
+        input[type=text]:focus,textarea:focus {
+border-color: #70AB8F;
+}
+
+        .navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+.navbar-default.transparent {
+    background-color: transparent;
+}
+.slide1, .slide2, .slide3 {
+    min-height: 560px;
+    background-size: cover;
+    background-position: center center;
+}
+.slide1 {
+    background-image: url("Images/players/Keane.JPG");
+}
+.slide2 {
+    background-image: url("Images/players/muller.JPG");
+}
+.slide3 {
+    background-image: url("Images/players/cristiano-ronaldo.JPG");
+}
+/* Carousel Fade Effect */
+.carousel.carousel-fade .item {
+    -webkit-transition: opacity 1s linear;
+    -moz-transition: opacity 1s linear;
+    -ms-transition: opacity 1s linear;
+    -o-transition: opacity 1s linear;
+    transition: opacity 1s linear;
+    opacity: .5;
+}
+.carousel.carousel-fade .active.item {
+    opacity: 1;
+}
+.carousel.carousel-fade .active.left,
+.carousel.carousel-fade .active.right {
+    left: 0;
+    z-index: 2;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+.carousel-overlay {
+    position: absolute;
+    bottom: 100px;
+    right: 0;
+    left: 0;
+}
     </style>
 </head>
 <body>
 
-    <div class="container-fluid bg-1 text-center">
-        <h3>Goughys</h3>
-        
-        <img src="~/Images/euro2016.png" class="img-thumbnail" alt="Euro 2016" width="350" height="350">
-        <h3>Fantasy Football App</h3>
-    </div>
+    @if (Model == null)
+    {
+        <div id="bg-fade-carousel" class="carousel slide carousel-fade" data-ride="carousel">
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <div class="slide1"></div>
+                </div>
+                <div class="item">
+                    <div class="slide2"></div>
+                </div>
+                <div class="item">
+                    <div class="slide3"></div>
+                </div>
+            </div><!-- .carousel-inner -->
+            <div class="container carousel-overlay text-center">
+                <h1>Play Fantasy Football Euro 2016</h1>
 
-    <div class="container-fluid bg-2 text-center">
-        <h3>What Am I?</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    </div>
+                <a class="btn btn-lg btn-success fp-buttons" @Html.ActionLink("Sign Up", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })>
+                    <span class="fa fa-check"></span>
+                </a>
+            </div>
+        </div><!-- .carousel -->
+        <div class="container-fluid bg-1 text-center">
+            <h3>Goughys</h3>
 
-    <div class="container-fluid bg-3 text-center">
-        <h3>Where To Find Me?</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    </div>
+            <img src="~/Images/euro2016.png" class="img-thumbnail" alt="Euro 2016" width="250" height="250">
+            <h3>Fantasy Football App</h3>
+        </div>
 
+
+    }
+    else
+    {
+        testfan2.Models.Player[] g = ViewBag.GK; testfan2.Models.Player[] d = ViewBag.DEF;
+        testfan2.Models.Player[] m = ViewBag.MID; testfan2.Models.Player[] f = ViewBag.FWD;
+        //for (var i = 0; i < p.Length; i++)
+        <div style="margin-left:5%;padding:1px 16px;height:1000px;">
+            <div class="actionbox ashbox" style="position: relative;height: 70px;">
+
+                <h5 class="floatleft" style="padding: 5px; margin-right: 10px;">Team: @ViewBag.TeamName</h5>
+
+                <h5 class="floatleft" style="padding: 5px;" >Manager: - @ViewBag.Owner</h5>
+
+            </div>
+
+            <div class="actionbox ashbox" style="position: relative; height: 600px;">
+
+                <div class="form-group" style="position: absolute;  left: 5%; top: 45%; ">
+                    <div class="floatleft">
+                        <span class="usericon">
+                            <input type="text" class="form-control" id="name" name="name" disabled placeholder="@g[0].PlayerSurname" /><img src="@Url.Content(g[0].NationTeam.JerseyPath)" alt="Image" width="25" height="25" />
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group" style="position: absolute; left: 15%; top: 5%;">
+                    <div class="floatleft">
+                        <span class="usericon">
+                            <input type="text" class="form-control" id="def1" name="def1" disabled placeholder="@d[0].PlayerSurname" /><img src="@Url.Content(d[0].NationTeam.JerseyPath)" alt="Image" width="25" height="25" />
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group" style="position: absolute; left: 15%; top: 25%;">
+
+                    <span class="usericon">
+                        <input type="text" class="form-control" id="name" name="name" disabled placeholder="@d[1].PlayerSurname" /><img src="@Url.Content(d[1].NationTeam.JerseyPath)" alt="Image" width="25" height="25" />
+                    </span>
+
+                </div>
+                <div class="form-group" style="position: absolute; left: 15%; top: 65%;">
+                    <div class="floatleft">
+                        <span class="usericon">
+                            <input type="text" class="form-control" id="name" name="name" disabled placeholder="@d[2].PlayerSurname" /><img src="@Url.Content(d[2].NationTeam.JerseyPath)" alt="Image" width="25" height="25" />
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group" style="position: absolute; left: 15%; top: 85%;">
+                    <div class="floatleft">
+                        <span class="usericon">
+                            <input type="text" class="form-control" id="name" name="name" disabled placeholder="@d[3].PlayerSurname" /><img src="@Url.Content(d[3].NationTeam.JerseyPath)" alt="Image" width="25" height="25" />
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group" style="position: absolute;  left: 45%; top: 5%;">
+                    <div class="floatleft">
+                        <span class="usericon">
+                            <input type="text" class="form-control" id="name" name="name" disabled placeholder="@m[0].PlayerSurname" /><img src="@Url.Content(m[0].NationTeam.JerseyPath)" alt="Image" width="25" height="25" />
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group" style="position: absolute;  left: 45%; top: 25%;">
+                    <div class="floatleft">
+                        <span class="usericon">
+                            <input type="text" class="form-control" id="name" name="name" disabled placeholder="@m[1].PlayerSurname" /><img src="@Url.Content(m[1].NationTeam.JerseyPath)" alt="Image" width="25" height="25" />
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group" style="position: absolute;  left: 45%; top:65%;">
+                    <div class="floatleft">
+                        <span class="usericon">
+                            <input type="text" class="form-control" id="name" name="name" disabled placeholder="@m[2].PlayerSurname" /><img src="@Url.Content(m[2].NationTeam.JerseyPath)" alt="Image" width="25" height="25" />
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group" style="position: absolute; left: 45%; top:85%">
+                    <div class="floatleft">
+                        <span class="usericon">
+                            <input type="text" class="form-control" id="name" name="name" disabled placeholder="@m[3].PlayerSurname" /><img src="@Url.Content(m[3].NationTeam.JerseyPath)" alt="Image" width="25" height="25" />
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group" style="position: absolute; right: 2%; top: 35%;">
+                    <div class="floatleft">
+                        <span class="usericon">
+                            <input type="text" class="form-control" id="@f[0].NationCode" name="name" disabled placeholder="@f[0].PlayerSurname" /><img src="@Url.Content(f[0].NationTeam.JerseyPath)" alt="Image" width="25" height="25" />
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group" style="position: absolute;   right: 2%; top: 55%;">
+                    <div class="floatleft">
+                        <span class="usericon">
+                            <input type="text" class="form-control" id="@f[1].NationCode" name="@f[1].NationCode" disabled placeholder="@f[1].PlayerSurname" /><img src="@Url.Content(f[1].NationTeam.JerseyPath)" alt="Image" width="25" height="25" />
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group" style="position: absolute; right: 2%; top: 80%;">
+                    <div class="col-md-offset-2 col-md-10">
+                        <p style="top: 900px; left: 800px;"><a class="button" @Html.ActionLink("Score", "ViewScore", "FantasyTeam", new { TeamID = Model.TeamID }, null)></a></p>
+                    </div>
+                </div>
+                <div class="form-group" style="position: absolute; right: 15%; top: 80%;">
+                    <div class="col-md-offset-2 col-md-10">
+                        <p style="top: 900px; left: 800px;"><a class="button" @Html.ActionLink("Continue", "Index", "Fixture")></a></p>
+                    </div>
+                </div>
+
+            </div>
+          @{ 
+              testfan2.Models.PlayerRoundStat[] pl = ViewBag.top5players;
+              testfan2.Models.FantasyTeam[] tm = ViewBag.top5teams;
+              if (pl != null)
+              {
+
+
+            <div id="box1" class="actionbox ashbox floatleft">
+                <h3>Top Players for Round One</h3>
+                <h5>@pl[0].Player.PlayerFirstname<text>, </text> @pl[0].Player.PlayerSurname <text>  Points: </text>@pl[0].TotalPoints</h5> <br />
+                <h5>@pl[1].Player.PlayerFirstname<text>, </text> @pl[1].Player.PlayerSurname <text>  Points: </text>@pl[1].TotalPoints</h5> <br />
+                <h5>@pl[2].Player.PlayerFirstname<text>, </text> @pl[2].Player.PlayerSurname <text>  Points: </text>@pl[2].TotalPoints</h5> <br />
+                <h5>@pl[3].Player.PlayerFirstname<text>, </text> @pl[3].Player.PlayerSurname <text>  Points: </text>@pl[3].TotalPoints</h5> <br />
+                <h5>@pl[4].Player.PlayerFirstname<text>, </text> @pl[4].Player.PlayerSurname <text>  Points: </text>@pl[4].TotalPoints</h5> <br />
+
+            </div>
+              }
+              if (tm != null && tm.Count() > 4)
+              {
+            <div id="box2" class="actionbox ashbox floatleft">
+                <h3>Top Teams for Round One</h3>
+                <h5>@tm[0].TeamName<text>, </text>  <text>  Points: </text>@tm[0].FirstRoundScore</h5> <br />
+                <h5>@tm[1].TeamName<text>, </text> <text>  Points: </text>@tm[1].FirstRoundScore</h5> <br />
+                <h5>@tm[2].TeamName<text>, </text> <text>  Points: </text>@tm[2].FirstRoundScore</h5> <br />
+                <h5>@tm[3].TeamName<text>, </text> <text>  Points: </text>@tm[3].FirstRoundScore</h5> <br />
+                <h5>@tm[4].TeamName<text>, </text>  <text>  Points: </text>@tm[4].FirstRoundScore</h5> <br />
+
+
+            </div>
+                  }
+              }
+        </div>
+            }
+    
+            <!-- Core JavaScript -->
+            <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+            <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
 

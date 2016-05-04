@@ -9,23 +9,34 @@ using System.Web;
 using System.Web.Mvc;
 using testfan2.Models;
 using testfan2.ViewModels;
-using testfan2.DAL;
+
 
 namespace testfan2.Controllers
 {
     public class FantasyTeamController : Controller
     {
-        private FantasyFootballContext db = new FantasyFootballContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: FantasyTeam
-        public ActionResult Index(int? teamId)
+        // GET: FantasyTeam of logged in user
+        public ActionResult Index(string userId)
         {
-            if (teamId == null)
+            if (userId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var fantasyTeam = db.FantasyTeams.FirstOrDefault(t => t.TeamID == teamId);
-            return View(fantasyTeam);
+            var team = db.FantasyTeams.FirstOrDefault(t => t.UserId == userId);
+          
+         //if there is a team order the players by goalkeeper, defender, midfielder then forwards
+            if (team != null)
+            {
+               
+                team.Players = db.FantasyTeams.Where(t => t.TeamID == team.TeamID).Single().Players;
+                team.Players.OrderBy(c => c.Position == Position.GoalKeeper).ThenBy(c => c.Position == Position.Defender).ThenBy(c => c.Position == Position.Midfielder).ThenBy(c => c.Position == Position.Forward);
+                return View(team);
+
+            }
+            return View();
+
         }
 
         // GET: FantasyTeam/Details/5
@@ -44,7 +55,7 @@ namespace testfan2.Controllers
         }
 
         // GET: FantasyTeam/Create
-        public ActionResult Create(int? CustomerID)
+        public ActionResult Create(string CustomerID)
         {
             if (CustomerID == null)
             {
@@ -52,19 +63,20 @@ namespace testfan2.Controllers
             }
             var fantasyTeam = new FantasyTeam();
             fantasyTeam.Players = new List<Player>();
-            // PopulateGoalkeepers(fantasyTeam);
+            fantasyTeam.IsConfirmed = false;
+            // PopulateTeam(fantasyTeam);
 
 
 
-            fantasyTeam.CustomerId = db.Customers.Where(c => c.CustomerID == CustomerID).Single().CustomerID;
-            ViewBag.CustomerName = db.Customers.Where(c => c.CustomerID == CustomerID).Single().CustomerFirstName;
+            fantasyTeam.UserId = db.Users.Where(c => c.Id == CustomerID).Single().Id;
+          //  ViewBag.CustomerName = db.Customers.Where(c => c.CustomerID == CustomerID).Single().CustomerFirstName;
             ViewBag.FantasyLeagueID = new SelectList(db.FantasyLeagues, "FantasyLeagueId", "FantasyLeagueName");
             return View(fantasyTeam);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TeamID,TeamName,CustomerId,FantasyLeagueID")] FantasyTeam fantasyTeam)
+        public ActionResult Create([Bind(Include = "TeamID,TeamName,UserId,FantasyLeagueID")] FantasyTeam fantasyTeam)
         {
 
             if (ModelState.IsValid)
@@ -76,9 +88,7 @@ namespace testfan2.Controllers
             ViewBag.FantasyLeagueID = new SelectList(db.FantasyLeagues, "FantasyLeagueId", "FantasyLeagueName", fantasyTeam.FantasyLeagueID);
             return View(fantasyTeam);
         }
-        // POST: FantasyTeam/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: FantasyTeam/AddTeam/ TeamID
         public ActionResult AddTeam(int? TeamID)
         {
             if (TeamID == null)
@@ -86,15 +96,35 @@ namespace testfan2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var fantasyTeam = db.FantasyTeams.Include(p => p.Players).Where(t => t.TeamID == TeamID).Single();
-            // fantasyTeam.Players = new List<Player>();
-            PopulateGoalkeepers(fantasyTeam);
+        
+            //populate view with all players in database
+            PopulateTeam(fantasyTeam);
             if (fantasyTeam == null)
             {
                 return HttpNotFound();
             }
             return View(fantasyTeam);
         }
+        
+        private void populatePitch(int? id)
+        {
 
+            //var gk = new List<Player>();
+            var fantasyTeam = db.FantasyTeams.FirstOrDefault(t => t.TeamID == id);
+            fantasyTeam.Players = new List<Player>();
+            fantasyTeam.IsConfirmed = true;
+             var gk = fantasyTeam.Players.ToList().Where(p => p.Position == Position.GoalKeeper).SingleOrDefault();
+            var def = fantasyTeam.Players.ToList().Where(p => p.Position == Position.Defender);
+
+            if (gk != null)
+            {
+                ViewBag.GK = gk;
+            }
+            ViewBag.DEF = def;  
+               
+        }
+        // POST: FantasyTeam/AddTeam/ TeamID, string[] def, string[] mid, string[]fwd, string[]gk  
+        // team should consist of a string array of one goalkeeper, an array of four defenders, an array of four midfielders and an array of two forwards
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddTeam(int? TeamID, string[] def, string[] mid, string[]fwd, string[]gk)
@@ -113,10 +143,7 @@ namespace testfan2.Controllers
             {
                 try {
 
-                    //UpdateFantasyPlayers(mid, teamToAddPlayers);
-                    //UpdateFantasyPlayers(fwd, teamToAddPlayers);
-                    //UpdateFantasyPlayers(gk, teamToAddPlayers);
-                    //db.SaveChanges();
+                   
                     if (def == null && mid == null && fwd == null && gk == null)
                     {
                         teamToAddPlayers.Players = new List<Player>();
@@ -134,6 +161,7 @@ namespace testfan2.Controllers
                             if (!fantasyPlayers.Contains(player.PlayerID))
                             {
                                 teamToAddPlayers.Players.Add(player);
+                                //teamToAddPlayers.AddPlayer(player);
                             }
                         }
                         else
@@ -152,25 +180,22 @@ namespace testfan2.Controllers
                     //Log the error (uncomment dex variable name and add a line here to write a log.
                     ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
                 }
+                catch(ArgumentException e)
+                {
+                    e.Message.ToString();
 
-                //foreach (var player in def)
-                //{
-                //   var playerToAdd = db.Players.Find(int.Parse(player));
-                //    fantasyTeam.Players.Add(playerToAdd);
-                //  //  fantasyTeam.AddPlayer(playerToAdd);
+                }
 
-                //}
+
             }
-            return RedirectToAction("Index", new { TeamID = teamToAddPlayers.TeamID });
-            //PopulateGoalkeepers(teamToAddPlayers);
-            //return View(teamToAddPlayers);
+            populatePitch(TeamID);
+            return RedirectToAction("Index","Home");
+            //return RedirectToAction("AddTeam", new { TeamID = teamToAddPlayers.TeamID });
+            
         }
         
-    
-
-            
-         
-
+ 
+       
         // GET: FantasyTeam/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -179,18 +204,17 @@ namespace testfan2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             FantasyTeam fantasyTeam = db.FantasyTeams.Include(i => i.Players).Where(i => i.TeamID == id).Single();
-            PopulateGoalkeepers(fantasyTeam);
+            PopulateTeam(fantasyTeam);
 
             if (fantasyTeam == null)
             {
                 return HttpNotFound();
             }
-            //ViewBag.CustomerId = new SelectList(db.Customers, "CustomerID", "CustomerSurname", fantasyTeam.CustomerId);
-           // ViewBag.FantasyLeagueID = new SelectList(db.FantasyLeagues, "FantasyLeagueId", "FantasyLeagueName", fantasyTeam.FantasyLeagueID);
+           
             return View(fantasyTeam);
         }
 
-        private void PopulateGoalkeepers(FantasyTeam fantasyTeam)
+        private void PopulateTeam(FantasyTeam fantasyTeam)
         {
             var goalkeepers = db.Players.ToList().Where(p => p.Position == Position.GoalKeeper);
             var defenders = db.Players.ToList().Where(p => p.Position == Position.Defender);
@@ -254,39 +278,68 @@ namespace testfan2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int? id, string[] selectedPlayers)
+        public ActionResult Edit(int? id, string[] def, string[] mid, string[] fwd, string[] gk)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            FantasyTeam fantasyTeamToUpdate = db.FantasyTeams.Include(i => i.Players).Where(i => i.TeamID == id).Single();
+            var teamToAddPlayers = db.FantasyTeams
+               .Include(i => i.Players)
+               .Where(i => i.TeamID == id)
+               .Single();
 
-            if (TryUpdateModel(fantasyTeamToUpdate, "",
-       new string[] { "TeamName" }))
+            if (TryUpdateModel(teamToAddPlayers, "",
+    new string[] { "TeamName" }))
             {
                 try
                 {
-                  
 
-                    UpdateFantasyPlayers(selectedPlayers, fantasyTeamToUpdate);
 
+                    if (def == null && mid == null && fwd == null && gk == null)
+                    {
+                        teamToAddPlayers.Players = new List<Player>();
+                    }
+                    var midHS = new HashSet<string>(mid);
+                    var defHS = new HashSet<string>(def);
+                    var fwdHS = new HashSet<string>(fwd);
+                    var gkHS = new HashSet<string>(gk);
+                    var fantasyPlayers = new HashSet<int>
+                        (teamToAddPlayers.Players.Select(p => p.PlayerID));
+                    foreach (var player in db.Players)
+                    {
+                        if (defHS.Contains(player.PlayerID.ToString()) || midHS.Contains(player.PlayerID.ToString()) || fwdHS.Contains(player.PlayerID.ToString()) || gkHS.Contains(player.PlayerID.ToString()))
+                        {
+                            if (!fantasyPlayers.Contains(player.PlayerID))
+                            {
+                                teamToAddPlayers.Players.Add(player);
+                                //teamToAddPlayers.AddPlayer(player);
+                            }
+                        }
+                        else
+                        {
+                            if (fantasyPlayers.Contains(player.PlayerID))
+                            {
+                                teamToAddPlayers.Players.Remove(player);
+                            }
+                        }
+                    }
                     db.SaveChanges();
 
-                    return RedirectToAction("Index", new {teamId = fantasyTeamToUpdate.TeamID } );
                 }
                 catch (RetryLimitExceededException /* dex */)
                 {
                     //Log the error (uncomment dex variable name and add a line here to write a log.
                     ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
                 }
-                catch(ArgumentException e)
+                catch (ArgumentException e)
                 {
                     e.Message.ToString();
+
                 }
             }
-            PopulateGoalkeepers(fantasyTeamToUpdate);
-            return View(fantasyTeamToUpdate);
+            populatePitch(id);
+            return RedirectToAction("Index", "Home");
         }
         private void UpdateFantasyPlayers(string[] selectedPlayers, FantasyTeam fantasyTeamToUpdate)
         {
@@ -331,32 +384,39 @@ namespace testfan2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var fantasyTeam = db.FantasyTeams.FirstOrDefault(t => t.TeamID == TeamID);
+           // var fantasyTeam = db.FantasyTeams.FirstOrDefault(t => t.TeamID == TeamID);
       
             var fixtures = db.Fixtures.ToList().Where(f => f.gamePlayed == true && f.RoundStage == RoundStage.FirstRound);
-            //var fantasyTeam = db.FantasyTeams.Include(t=>t.Players).Where(t => t.TeamID == id).SingleOrDefault();
-            //if (fantasyTeam == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Bad Request");
-            //}
+            var fantasyTeam = db.FantasyTeams.Include(t=>t.Players).Where(t => t.TeamID == TeamID).SingleOrDefault();
+            if (fantasyTeam == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Bad Request");
+            }
             var players = fantasyTeam.Players;
             var viewModel = new List<FantasyTeamScoreUpdate>();
 
+            var totalScore = 0;
             foreach(var f in fixtures)
             {
                 foreach(var p in players)
                 {
                     var score = db.PlayerRoundStats.ToList().Where(s => s.FixtureId == f.FixtureId && s.PlayerID == p.PlayerID).SingleOrDefault();
-                    viewModel.Add(new FantasyTeamScoreUpdate
+                    if (score != null)
                     {
-                       // FantasyTeamName = fantasyTeam.TeamName,
-                        PlayerName = p.PlayerFirstname + " " + p.PlayerSurname,
-                        Position = p.Position,
-                        Team = p.NationCode,
-                        Score = score.TotalPoints
-                    });
+                        viewModel.Add(new FantasyTeamScoreUpdate
+                        {
+                            // FantasyTeamName = fantasyTeam.TeamName,
+                            PlayerName = p.PlayerFirstname + " " + p.PlayerSurname,
+                            Position = p.Position,
+                            Team = p.NationCode,
+                            Score = score.TotalPoints
+                        });
+                        totalScore += score.TotalPoints;
+                    }
                 }
             }
+            fantasyTeam.FirstRoundScore = totalScore;
+            db.SaveChanges();
             ViewBag.TeamScore = viewModel;
             return View(fantasyTeam);
         }

@@ -15,7 +15,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>testfan2</RootNamespace>
     <AssemblyName>testfan2</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort>44300</IISExpressSSLPort>
@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,11 +45,37 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.7.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.7.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.7.0\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=6.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.6.2.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -67,17 +94,19 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Spatial, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.7.0\lib\net40\System.Spatial.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -118,6 +147,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -181,7 +211,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\FantasyLeagueController.cs" />
     <Compile Include="Controllers\FantasyTeamController.cs" />
     <Compile Include="Controllers\FixtureController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -189,61 +219,12 @@
     <Compile Include="Controllers\NationTeamController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\PlayerRoundStatController.cs" />
-    <Compile Include="DAL\FantasyFootballContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201603072318246_InitialCreate.cs" />
-    <Compile Include="Migrations\201603072318246_InitialCreate.Designer.cs">
-      <DependentUpon>201603072318246_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603081843561_v2.cs" />
-    <Compile Include="Migrations\201603081843561_v2.Designer.cs">
-      <DependentUpon>201603081843561_v2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603081911014_v3.cs" />
-    <Compile Include="Migrations\201603081911014_v3.Designer.cs">
-      <DependentUpon>201603081911014_v3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603081929271_v4.cs" />
-    <Compile Include="Migrations\201603081929271_v4.Designer.cs">
-      <DependentUpon>201603081929271_v4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603081956301_v5.cs" />
-    <Compile Include="Migrations\201603081956301_v5.Designer.cs">
-      <DependentUpon>201603081956301_v5.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603162051296_fixtures.cs" />
-    <Compile Include="Migrations\201603162051296_fixtures.Designer.cs">
-      <DependentUpon>201603162051296_fixtures.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603171354174_fixture6.cs" />
-    <Compile Include="Migrations\201603171354174_fixture6.Designer.cs">
-      <DependentUpon>201603171354174_fixture6.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603201256411_player2.cs" />
-    <Compile Include="Migrations\201603201256411_player2.Designer.cs">
-      <DependentUpon>201603201256411_player2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603231702204_statData.cs" />
-    <Compile Include="Migrations\201603231702204_statData.Designer.cs">
-      <DependentUpon>201603231702204_statData.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603231742104_seedStat.cs" />
-    <Compile Include="Migrations\201603231742104_seedStat.Designer.cs">
-      <DependentUpon>201603231742104_seedStat.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603291521483_playerstat.cs" />
-    <Compile Include="Migrations\201603291521483_playerstat.Designer.cs">
-      <DependentUpon>201603291521483_playerstat.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603301326448_fixtureUpdate2.cs" />
-    <Compile Include="Migrations\201603301326448_fixtureUpdate2.Designer.cs">
-      <DependentUpon>201603301326448_fixtureUpdate2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603301455518_stats4.cs" />
-    <Compile Include="Migrations\201603301455518_stats4.Designer.cs">
-      <DependentUpon>201603301455518_stats4.cs</DependentUpon>
+    <Compile Include="Migrations\201605042141256_init.cs" />
+    <Compile Include="Migrations\201605042141256_init.Designer.cs">
+      <DependentUpon>201605042141256_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -265,19 +246,49 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\menuAddPlayer.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\BEL.jpg" />
     <Content Include="Images\euro2016.png" />
+    <Content Include="Images\formations\4-4-2.png" />
+    <Content Include="Images\Jerseys\BEL.jpg" />
+    <Content Include="Images\Jerseys\ENG.jpg" />
+    <Content Include="Images\Jerseys\IRE.jpg" />
+    <Content Include="Images\Jerseys\ITA.jpg" />
+    <Content Include="Images\Jerseys\RUS.jpg" />
+    <Content Include="Images\Jerseys\SVK.jpg" />
+    <Content Include="Images\Jerseys\SWE.jpg" />
+    <Content Include="Images\Jerseys\WAL.jpg" />
+    <Content Include="Images\LeagueBackgrounds\GroupOfDeath.jpg" />
+    <Content Include="Images\players\cristiano-ronaldo.jpg" />
+    <Content Include="Images\players\Keane.jpg" />
+    <Content Include="Images\players\muller.jpg" />
+    <Content Include="Images\players\player.JPG" />
+    <Content Include="Images\players\rooney.jpeg" />
+    <Content Include="Images\players\silva.jpg" />
+    <Content Include="Images\stadiums\bordeaux.jpg" />
+    <Content Include="Images\stadiums\Lens.jpg" />
+    <Content Include="Images\stadiums\Lille.jpg" />
+    <Content Include="Images\stadiums\lyon.jpg" />
+    <Content Include="Images\stadiums\marseille.jpg" />
+    <Content Include="Images\stadiums\SaintDenis.jpg" />
+    <Content Include="Images\stadiums\Toulouse.jpg" />
+    <Content Include="music\IRE.mp3" />
+    <Content Include="Scripts\addTeam.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ClassDiagram1.cd" />
+    <Content Include="app.config" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-migrate-1.2.1.js" />
+    <Content Include="Scripts\jquery-migrate-1.2.1.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -286,7 +297,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -320,11 +333,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Customer\Create.cshtml" />
-    <Content Include="Views\Customer\Delete.cshtml" />
-    <Content Include="Views\Customer\Details.cshtml" />
-    <Content Include="Views\Customer\Edit.cshtml" />
-    <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\NationTeam\Create.cshtml" />
     <Content Include="Views\NationTeam\Delete.cshtml" />
     <Content Include="Views\NationTeam\Details.cshtml" />
@@ -357,9 +365,18 @@
     <Content Include="Views\Shared\DisplayTemplates\motm.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\iswin.cshtml" />
     <Content Include="Views\FantasyTeam\ViewScore.cshtml" />
+    <Content Include="Views\FantasyLeague\Create.cshtml" />
+    <Content Include="Views\FantasyLeague\Delete.cshtml" />
+    <Content Include="Views\FantasyLeague\Details.cshtml" />
+    <Content Include="Views\FantasyLeague\Edit.cshtml" />
+    <Content Include="Views\FantasyLeague\Index.cshtml" />
+    <Content Include="Views\PlayerRoundStat\ShowTeamData.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Cleansheet.cshtml" />
+    <Content Include="Views\Fixture\NextRound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="DAL\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -370,44 +387,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201603072318246_InitialCreate.resx">
-      <DependentUpon>201603072318246_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603081843561_v2.resx">
-      <DependentUpon>201603081843561_v2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603081911014_v3.resx">
-      <DependentUpon>201603081911014_v3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603081929271_v4.resx">
-      <DependentUpon>201603081929271_v4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603081956301_v5.resx">
-      <DependentUpon>201603081956301_v5.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603162051296_fixtures.resx">
-      <DependentUpon>201603162051296_fixtures.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603171354174_fixture6.resx">
-      <DependentUpon>201603171354174_fixture6.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603201256411_player2.resx">
-      <DependentUpon>201603201256411_player2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603231702204_statData.resx">
-      <DependentUpon>201603231702204_statData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603231742104_seedStat.resx">
-      <DependentUpon>201603231742104_seedStat.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603291521483_playerstat.resx">
-      <DependentUpon>201603291521483_playerstat.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603301326448_fixtureUpdate2.resx">
-      <DependentUpon>201603301326448_fixtureUpdate2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603301455518_stats4.resx">
-      <DependentUpon>201603301455518_stats4.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201605042141256_init.resx">
+      <DependentUpon>201605042141256_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

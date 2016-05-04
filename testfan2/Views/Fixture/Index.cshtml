@@ -3,70 +3,207 @@
 @{
     ViewBag.Title = "Index";
 }
+<style>
+    .actionbox {
+        width: 90%;
+        padding-top: 20px;
+        padding: 20px;
+        background-color: #999999;
+        border-left: 10px solid #2ecc71;
+        display: inline-block;
+        display: table;
+        max-width: 800px;
+        margin-bottom: 5px;
+    }
 
-<h2>Index</h2>
+    .ashbox {
+        background-color: #34495e;
+        color: white;
+    }
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Venue)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RoundStage)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HomeTeam.NationCode)
-        </th>
-        <th>
-            <text>Score</text>
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AwayTeam.NationCode)
-        </th>
-    
-    
-      
-        
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
+    .button {
+        display: inline-block;
+        font-weight: normal;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        background-image: none;
+        border: 1px solid transparent;
+        white-space: nowrap;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.428571429;
+        border-radius: 4px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+        font-family: 'PT Sans',helvetica;
+        margin: 29px 6px;
+    }
 
-        <td>
-            @Html.DisplayFor(modelItem => item.Venue)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RoundStage)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HomeTeam.NationCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HomeTeamScore)
-        <text>-</text>
-            @Html.DisplayFor(modelItem => item.AwayTeamScore)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AwayTeam.NationCode)
-        </td>
-    
-       
-        
-        <td>
-            
-            @if (item.gamePlayed == false)
-            {
-            @Html.ActionLink("PlayGame", "PlayGame", new { id = item.FixtureId }) 
-            }
-            else { <text>Full time</text>}|
-            @Html.ActionLink("Details", "Details", new { id=item.FixtureId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.FixtureId })
-        </td>
-    </tr>
+    h1 {
+        margin: 0;
+        line-height: 95px;
+    }
+
+    .button, .button.green {
+        background: #69c773;
+        color: #FFF;
+        -webkit-box-shadow: 0 4px 0 0 #51a65f;
+        -moz-box-shadow: 0 4px 0 0 #51a65f;
+        box-shadow: 0 4px 0 0 #51a65f;
+    }
+
+    .floatright {
+        float: right;
+    }
+
+    .floatleft {
+        float: left;
+    }
+</style>
+<h2>Fixture List for Round One</h2>
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+<div class="actionbox ashbox">
+
+
+
+
+    <text>Games</text>
+
+
+
+</div>
+
+@if (TempData["Error"] != null)
+{
+    <p style="color: red">@TempData["Error"]</p>
+
+}
+@{bool finished = false; }
+@if (Model.All(c => c.gamePlayed == true))
+{
+    finished = true;
+
+}
+@foreach (var item in Model)
+{
+    <div class="actionbox ashbox">
+
+        @if (item.Venue == testfan2.Models.Venue.SaintDenis)
+        {
+
+            <h3>Venue</h3>
+
+            <img src="~/Images/stadiums/SaintDenis.jpg" alt="Saint Denis Stadium" width="100" height="100" class="floatright">
+            <h3>Saint Denis</h3>
+
+        }
+        @if (item.Venue == testfan2.Models.Venue.Marseille)
+        {
+
+            <h3>Venue</h3>
+
+            <img src="~/Images/stadiums/marseille.jpg" alt="Marseille Stadium" width="100" height="100" class="floatright">
+            <h3>Marseille</h3>
+
+        }
+        @if (item.Venue == testfan2.Models.Venue.Bordeaux)
+        {
+
+            <h3>Venue</h3>
+
+            <img src="~/Images/stadiums/bordeaux.jpg" alt="Bordeaux Stadium" width="100" height="100" class="floatright">
+            <h3>Bordeaux</h3>
+
+        }
+        @if (item.Venue == testfan2.Models.Venue.Lyon)
+        {
+
+            <h3>Venue</h3>
+
+            <img src="~/Images/stadiums/lyon.jpg" alt="Lyon Stadium" width="100" height="100" class="floatright">
+            <h3>Lyon</h3>
+
+        }
+        @if (item.Venue == testfan2.Models.Venue.Lens)
+        {
+
+            <h3>Venue</h3>
+
+            <img src="~/Images/stadiums/Lens.jpg" alt="Lens Stadium" width="100" height="100" class="floatright">
+            <h3>Lens</h3>
+
+        }
+        @if (item.Venue == testfan2.Models.Venue.Toulouse)
+        {
+
+            <h3>Venue</h3>
+
+            <img src="~/Images/stadiums/Toulouse.jpg" alt="Toulouse Stadium" width="100" height="100" class="floatright">
+            <h3>Toulouse</h3>
+
+        }
+        @if (item.Venue == testfan2.Models.Venue.Lille)
+        {
+
+            <h3>Venue</h3>
+
+            <img src="~/Images/stadiums/Lille.jpg" alt="Lille Stadium" width="100" height="100" class="floatright">
+            <h3>Lille</h3>
+
+        }
+        <h1 class="floatleft">
+            @Html.DisplayFor(model => item.HomeTeam.Nation) @if (item.gamePlayed == true)
+                {@Html.DisplayFor(model => item.HomeTeamScore) <text>-</text>
+                @Html.DisplayFor(model => item.AwayTeamScore)}
+                else
+                {<text>-V-</text> } @Html.DisplayFor(model => item.AwayTeam.Nation)
+            </h1>
+
+
+            <div class="button floatright">
+                @if (item.gamePlayed == false)
+                { @Html.ActionLink("PlayGame", "PlayGame", new { id = item.FixtureId })  }
+                else
+                { <text> Full time | </text>
+                    @Html.ActionLink("Details ", "Details", new { id = item.FixtureId })<text>|</text>
+                    @Html.ActionLink("Show Team Data", "ShowTeamData", "PlayerRoundStat", new { fixtureId = item.FixtureId }, null)
+
+
+                }
+                @*@if (finished == true)
+                {
+                    <text>|</text>   @Html.ActionLink(" Play Next Round", "NextRound", new { round = item.RoundStage + 1 })
+                }*@
+            </div>
+
+
+
+        </div>
+}
+@if (finished == true)
+{
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <p><a class="button" @Html.ActionLink("Make Transfers", "Edit", "FantasyTeam", new { id = ViewBag.TeamId }, null)></a></p>
+        </div>
+    </div>
+    if (ViewBag.RoundStage != null)
+    {
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-8">
+            <p><a class="button" @Html.ActionLink(" Play Next Round", "NextRound", new { round = ViewBag.RoundStage + 1 })></a></p>
+        </div>
+    </div>
+    }
 }
 
-</table>
+
+

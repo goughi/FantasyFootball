@@ -1,33 +1,34 @@
 ﻿@model testfan2.Models.FantasyTeam
 
-<div>
-    <h4>FantasyTeam</h4>
-    <hr />
-    <dl class="dl-horizontal">
 
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TeamName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TeamName)
-        </dd>
-
-    </dl>
+<h4>My Team Score</h4>
+<hr />
+<div class="actionbox ashbox">
+    <h3 class="floatleft">
+        @Html.DisplayNameFor(model => model.TeamName)
+        <text>:   </text>
+        @Html.DisplayFor(model => model.TeamName)
+    </h3>
+    <h3 class="floatright">Points</h3>
 </div>
 
-@{ 
+@{
     List<testfan2.ViewModels.FantasyTeamScoreUpdate> players = ViewBag.TeamScore;
+    players.OrderByDescending(p => p.Score);
     int total = 0;
-    foreach(var player in players)
+    foreach (var player in players)
     {
-        <p>@player.PlayerName   @player.Position @player.Team @player.Score</p>
         total += player.Score;
+        <div class="actionbox ashbox">
+            <h5 class="floatleft">@player.PlayerName   @player.Position @player.Team </h5>
+            <h5 class="floatright">@player.Score</h5>
+        </div>
     }
-    <p>Total: @total</p>
-}
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.TeamID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+    <div class="actionbox ashbox">
+        <h3 class="floatright">
+          Total: @total</h3>
+        </div>
+            }
+            <p>
+                @Html.ActionLink("Back to Team", "Index", "Home")
+            </p>

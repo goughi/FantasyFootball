@@ -1,0 +1,76 @@
+﻿@model testfan2.Models.Fixture
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Fixture</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AwayTeam.NationCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AwayTeam.NationCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HomeTeam.NationCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HomeTeam.NationCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Venue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Venue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RoundStage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoundStage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HomeTeamScore)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HomeTeamScore)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AwayTeamScore)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AwayTeamScore)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AwayTeamScorer)
+        </dt>
+        <dd>
+            @{
+                foreach (var player in Model.AwayTeamScorer)
+                {
+                    @player.PlayerFirstname @:  @player.PlayerSurname <br />
+                }
+            }
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.FixtureId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

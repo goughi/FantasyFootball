@@ -1,58 +1,37 @@
 ﻿@model testfan2.Models.Player
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Player Info";
 }
 
 <h2>Details</h2>
 
-<div>
     <h4>Player</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.PlayerName)
-        </dt>
+    
+    <div class="actionbox ashbox">
 
-        <dd>
-            @Html.DisplayFor(model => model.PlayerName)
-        </dd>
+        <h3>@Html.DisplayFor(model => model.PlayerFirstname)</h3>
+        <h3>@Html.DisplayFor(model => model.PlayerSurname)</h3>
+        <img src="~/Images/players/player.JPG" alt="Profile" width="250" height="300" class="floatright">
+        
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Position)
-        </dt>
+        <h1 class="floatleft">
+           <text>Position: </text> @Html.DisplayFor(model => model.Position)<br /> <text>DOB: </text> @Html.DisplayFor(model => model.DateOfBirth)<br />
 
-        <dd>
-            @Html.DisplayFor(model => model.Position)
-        </dd>
+            <text>Value: </text>@Html.DisplayFor(model => model.PlayerValue) <text>million</text><br /> <text>Team: </text>@Html.DisplayFor(model => model.NationTeam.Nation)<br />
+        </h1>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateOfBirth)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateOfBirth)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PlayerValue)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PlayerValue)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NationCode)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NationCode)
-        </dd>
-
-    </dl>
-</div>
-<p>
+       
+  <p class="button floatright"> @Html.ActionLink("Back to players", "Index") </p>
+       
+            
+        
+        
+        
+   
+     
+    </div>
+@*<p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.PlayerID }) |
     @Html.ActionLink("Back to List", "Index")
-</p>
+</p>*@

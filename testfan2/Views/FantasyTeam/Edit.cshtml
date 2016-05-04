@@ -1,93 +1,530 @@
 ﻿@model testfan2.Models.FantasyTeam
 
-@{
-    ViewBag.Title = "Edit";
-}
+<head>
+    <title></title>
+    <META NAME="DESCRIPTION" CONTENT="">
+    <META NAME="KEYWORDS" CONTENT="">
+    <style>
+        input[type=table]:enabled {
+            background: #ffff00;
+        }
 
-<h2>Edit</h2>
+        input[type=table]:disabled {
+            background: #dddddd;
+        }
+
+        :-ms-input-placeholder {
+            color: red;
+        }
 
 
-@using (Html.BeginForm())
-{
+        .pitch {
+            width: 60%;
+            margin: 10px 30% 10px 11%;
+            padding: 10px 0;
+            border-radius: 10px;
+            background-color: #70AB8F;
+            border: 4px solid;
+            height: 75%;
+            top: 20%;
+            left: 20%;
+            right: 6%;
+            position: absolute;
+            float: right;
+        }
+
+        header {
+            background-color: #E4DBBF;
+            text-align: center;
+            padding-top: 12px;
+            padding-bottom: 8px;
+            margin-top: -11px;
+            margin-bottom: -8px;
+            border-radius: 10px 10px 0 0;
+            color: #DC5B21;
+        }
+
+        input[type=text] {
+            margin-bottom: 20px;
+            margin-top: 10px;
+            width: 100%;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #383127;
+            font-size: small;
+        }
+
+            input[type=text]:focus, textarea:focus {
+                border-color: #70AB8F;
+            }
+
+        .usericon input {
+            padding-left: 25px;
+        }
+
+        .usericon:before {
+            height: 100%;
+            width: 25px;
+            display: -webkit-box;
+            -webkit-box-pack: center;
+            -webkit-box-align: center;
+            position: absolute;
+            content: "\e008";
+            font-family: 'Glyphicons Halflings';
+            pointer-events: none;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+</head>
+
+
+
+
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { name = "form1", id = "form1" }))
+
+    {
+
     @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+    @Html.HiddenFor(model => model.TeamID)
+     List<testfan2.ViewModels.ViewPlayers>
+                               defenders = ViewBag.Defenders;
+        List<testfan2.ViewModels.ViewPlayers>
+            midfielders = ViewBag.Midfielders;
+        List<testfan2.ViewModels.ViewPlayers>
+            goalkeepers = ViewBag.Goalkeepers;
+        List<testfan2.ViewModels.ViewPlayers>
+            forwards = ViewBag.Forwards;
+        //var defLength = defenders.Count;
+        int i = 0;
     
-    <div class="form-horizontal">
-        <h4>FantasyTeam</h4>
-        <hr/>
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.TeamID)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TeamName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TeamName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TeamName, "", new { @class = "text-danger" })
-            </div>
+    <h2>
+        @Html.DisplayNameFor(model => model.TeamName)    @Html.DisplayFor(model => model.TeamName)
+    </h2>
+
+    <div id="addTeamMenu" >
+        <ul class="nav nav-list">
+            <li><a data-toggle="collapse" data-parent="#accordion" href="#gk" aria-expanded="true" aria-controls="collapseOne">Goalkeepers</a></li>
+            <li><a data-toggle="collapse" data-parent="#accordion" href="#def" aria-expanded="true" aria-controls="collapseOne"> Defenders</a></li>
+            <li><a data-toggle="collapse" data-parent="#accordion" href="#mid" aria-expanded="true" aria-controls="collapseOne"> Midfielders</a></li>
+            <li><a data-toggle="collapse" data-parent="#accordion" href="#Fwd" aria-expanded="true" aria-controls="collapseOne"> Forwards</a></li>
+        </ul>
+    </div>
+
+    <div class="table-responsive">
+        <table style="border:1px solid black; width: 25%; position:absolute;" class="table collapse" id="def" align="left">
+            <tr><td> </td><td><b>Defenders</b></td></tr>
+            @{ 
+
+                foreach (var d in defenders)
+                {
+
+                    var v = d.PlayerValue;
+
+
+                    <tr><td><input type="checkbox" name="def" value="@d.playerId" id="@v" onclick="chkcontrol(@i)" @(Html.Raw(d.added ? "checked=\"checked\"" : "")) ;></td><td id="defs">@d.playerName</td></tr>
+                    i++;
+                }
+            }
+        </table>
+    </div>
+
+
+    <div class="table-responsive">
+        <table style="border:1px solid black; width: 25%; position:absolute;" id="gk" class="table collapse">
+            <tr data-bgcolor #ffffcc><td> </td><td><b>Goalkeepers</b></td></tr>
+            @{
+                int y = 0;
+                foreach (var g in goalkeepers)
+                {
+
+
+
+
+                    <tr><td><input type="checkbox" name="gk" value="@g.playerId" id="@g.PlayerValue" onclick="chkcontrol(@y)" @(Html.Raw(g.added ? "checked=\"checked\"" : "")) ;></td><td id="mids">@g.playerName</td></tr>
+                    y++;
+
+                }
+            }
+        </table>
+    </div>
+
+    <div class="table-responsive">
+        <table style="border:1px solid black; width: 25%;  position:absolute;" id="mid" class="table collapse">
+            <tr><td> </td><td><b>Midfielders</b></td></tr>
+            @{
+                int k = 0;
+                foreach (var m in midfielders)
+                {
+
+
+
+                    <tr><td><input type="checkbox" name="mid" value="@m.playerId" id="@m.PlayerValue" onclick="chkcontrol(@k)" @(Html.Raw(m.added ? "checked=\"checked\"" : "")) ;></td><td>@m.playerName</td></tr>
+                    k++;
+
+                }
+            }
+        </table>
+    </div>
+
+
+    <div class="table-responsive">
+        <table style="border:1px solid black; width: 25%; position:absolute;" id="Fwd" class="table collapse">
+
+            <tr><td> </td><td><b>Forwards</b></td></tr>
+            @{
+                int x = 0;
+                foreach (var f in forwards)
+                {
+
+                    <tr><td><input type="checkbox" name="fwd" value="@f.playerId" id="@f.PlayerValue" onclick="chkcontrol(@x)" @(Html.Raw(f.added ? "checked=\"checked\"" : "")) ;></td><td>@f.playerName</td></tr>
+
+                    x++;
+                }
+            }
+
+        </table>
+    </div>
+
+    <div style="margin-left:28%;padding:1px 16px;height:1000px;">
+        <div class="actionbox ashbox ">
+
+            <h5 class="floatleft">Team: @ViewBag.TeamName</h5>
+            <h5 class="floatleft">Manager: - @ViewBag.Owner</h5>
+
         </div>
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.CustomerId, "CustomerId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("CustomerId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+        <div class="actionbox ashbox" style="position: relative; height: 500px;">
+
+            <div class="form-group" style="position: absolute;  left: 5%; top: 45%; ">
+                <div class="floatleft">
+                    <span class="usericon">
+                        <input class="form-control" id="name" name="name" disabled placeholder="add goalkeeper" />
+                    </span>
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FantasyLeagueID, "FantasyLeagueID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("FantasyLeagueID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.FantasyLeagueID, "", new { @class = "text-danger" })
+            <div class="form-group" style="position: absolute; left: 15%; top: 5%;">
+                <div class="floatleft">
+                    <span class="usericon">
+                        <input class="form-control" id="def1" name="def1" disabled placeholder="add defender" />
+                    </span>
+                </div>
             </div>
-        </div>*@
+            <div class="form-group" style="position: absolute; left: 15%; top: 25%;">
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <table>
-                    <tr>
-                        @{
-                            int cnt = 0;
-                            List<testfan2.ViewModels.ViewPlayers> players = ViewBag.Players;
+                <span class="usericon">
+                    <input class="form-control" id="def2" name="def2" disabled placeholder="add defender" />
+                </span>
 
-                            foreach (var player in players)
-                            {
-                                if (cnt++ % 3 == 0)
-                                {
-                                    @:</tr><tr>
-
-
-                                }
-                                @:<td>
-
-                    @*@:  @player.playerName
-                    @Html.EditorFor(model => player.added)*@
-                                    <input type="checkbox"
-                                           name="selectedPlayers"
-                                           value="@player.playerId"
-                                           @(Html.Raw(player.added ? "checked=\"checked\"" : "")) />
-                                            @:  @player.playerName
-                                            @:</td>
-
-                            }
-                            @:</tr>
-
-                        }
-                    </table>
+            </div>
+            <div class="form-group" style="position: absolute; left: 15%; top: 65%;">
+                <div class="floatleft">
+                    <span class="usericon">
+                        <input class="form-control" id="def3" name="def3" disabled placeholder="add defender" />
+                    </span>
+                </div>
+            </div>
+            <div class="form-group" style="position: absolute; left: 15%; top: 85%;">
+                <div class="floatleft">
+                    <span class="usericon">
+                        <input class="form-control" id="def4" name="def4" disabled placeholder="add defender" />
+                    </span>
+                </div>
+            </div>
+            <div class="form-group" style="position: absolute;  left: 45%; top: 5%;">
+                <div class="floatleft">
+                    <span class="usericon">
+                        <input class="form-control" id="name" name="name" disabled placeholder="add midfielder" />
+                    </span>
+                </div>
+            </div>
+            <div class="form-group" style="position: absolute;  left: 45%; top: 25%;">
+                <div class="floatleft">
+                    <span class="usericon">
+                        <input class="form-control" id="name" name="name" disabled placeholder="add midfielder" />
+                    </span>
+                </div>
+            </div>
+            <div class="form-group" style="position: absolute;  left: 45%; top:65%;">
+                <div class="floatleft">
+                    <span class="usericon">
+                        <input class="form-control" id="name" name="name" disabled placeholder="add midfielder" />
+                    </span>
+                </div>
+            </div>
+            <div class="form-group" style="position: absolute; left: 45%; top:85%">
+                <div class="floatleft">
+                    <span class="usericon">
+                        <input class="form-control" id="name" name="name" disabled placeholder="add midfielder" />
+                    </span>
                 </div>
             </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <div class="form-group" style="position: absolute; right: 2%; top: 35%;">
+                <div class="floatleft">
+                    <span class="usericon">
+                        <input class="form-control" id="name" name="name" disabled placeholder="add forward" />
+                    </span>
+                </div>
             </div>
-        </div>
-    </div>
-}
+            <div class="form-group" style="position: absolute;   right: 2%; top: 55%;">
+                <div class="floatleft">
+                    <span class="usericon">
+                        <input class="form-control" id="name" name="name" disabled placeholder="add forward" />
+                    </span>
+                </div>
+            </div>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+            <div class="form-group" style="position: absolute; right: 2%; top: 80%;">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" onclick="return countTeam();" class="button" />
+                </div>
+            </div>
+
+        </div>
+        <div class="actionbox ashbox" style="position: relative;">
+
+            <h5 class="floatleft">Sum of the values can't exceed 100 million.</h5>
+            <h5 class="floatleft" id="msg"> </h5>
+
+        </div>
 </div>
 
+
+
+                }
+
+
+<script type="text/javascript">
+        var mid = 0;
+        //$(document).ready(function () {
+        //    $('.nav li a').click(function (e) {
+
+        //        $('.active').removeClass('active');
+
+
+        //        $(this).addClass('active');
+        //        e.preventDefault();
+        //    });
+        //});
+
+        function chkcontrol(j) {
+            var totalDef = 0;
+            var totalMid = 0;
+            var totalFwd = 0;
+            var totalGk = 0;
+            var sum = 0;
+            var checkBoxes = document.getElementsByName(j.name);
+
+            //var cells = document.getElementsByTagName('td');
+            //for (var i = 0; i <= cells.length; i++) {
+            //    cells[i].addEventListener('click', clickHandler);
+            //}
+
+            //function clickHandler() {
+            //    document.getElementById("def1").value = (this.textContent);
+            //}
+            for (var i = 0; i < document.form1.def.length; i++) {
+
+                if (document.form1.def[i].checked) {
+                    totalDef = totalDef + 1;
+                    sum = sum + parseFloat(document.form1.def[i].id);
+                    if (totalDef == 1) {
+
+                        document.getElementById("def1").placeholder = "Defender Added";
+                        document.getElementById("def1").style.color = "#ff0000"
+                    }
+                    if (totalDef == 2) {
+
+                        document.getElementById("def2").placeholder = "Defender Added";
+                        document.getElementById("def2").style.color = "#ff0000"
+                    }
+                    if (totalDef == 3) {
+
+                        document.getElementById("def3").placeholder = "Defender Added";
+                        document.getElementById("def3").style.color = "#ff0000"
+                    }
+                    if (totalDef == 4) {
+
+                        document.getElementById("def4").placeholder = "Defender Added";
+                        document.getElementById("def4").style.color = "#ff0000"
+                    }
+                }
+                document.getElementById("msg").innerHTML = "Sum :" + sum.toFixed(2);
+
+                if (totalDef > 4) {
+                    sum = sum - parseFloat(document.form1.def[j].id);
+
+                    document.form1.def[j].checked = false;
+                    alert("Please Select only four defenders");
+                    document.getElementById("msg").innerHTML = "Sum :" + sum.toFixed(2);
+
+                    return false;
+                }
+
+                if (sum > 100) {
+                    sum = sum - parseFloat(document.form1.def[j].id);
+                    document.form1.def[j].checked = false;
+                    alert("Sum of the selection can't be more than 100 million");
+                    document.getElementById("msg").innerHTML = "Sum :" + sum.toFixed(2);
+                    return false;
+                }
+
+            }
+
+
+            //function chkcontrol(j) {
+
+            //    var totalMid = 0;
+
+            //    var sum = parseFloat(document.getElementById("msg").innerHTML);
+
+            for (var i = 0; i < document.form1.gk.length; i++) {
+
+
+                if (document.form1.gk[i].checked) {
+                    totalGk = totalGk + 1;
+                    sum = sum + parseFloat(document.form1.gk[i].id);
+
+                }
+                document.getElementById("msg").innerHTML = "Sum :" + sum.toFixed(2);
+                if (totalGk > 1) {
+                    sum = sum - parseFloat(document.form1.gk[j].id);
+                    document.form1.gk[j].checked = false;
+                    alert("Please Select only one goalkeeper");
+
+                    document.getElementById("msg").innerHTML = "Sum :" + sum.toFixed(2);
+                    return;
+                }
+
+
+                if (sum > 100) {
+                    sum = sum - parseFloat(document.form1.gk[j].id);
+                    document.form1.gk[j].checked = false;
+                    alert("Sum of the selection can't be more than 100 million");
+                    document.getElementById("msg").innerHTML = "Sum :" + sum.toFixed(2);
+                    return;
+                }
+
+
+            }
+
+            for (var i = 0; i < document.form1.mid.length; i++) {
+
+
+                if (document.form1.mid[i].checked) {
+                    totalMid = totalMid + 1;
+                    mid += 1;
+                    sum = sum + parseFloat(document.form1.mid[i].id);
+
+                }
+                document.getElementById("msg").innerHTML = "Sum :" + sum.toFixed(2);
+                if (totalMid > 4) {
+                    sum = sum - parseFloat(document.form1.mid[j].id);
+                    document.form1.mid[j].checked = false;
+                    alert("Please Select only two forwards");
+
+                    document.getElementById("msg").innerHTML = "Sum :" + sum.toFixed(2);
+                    return;
+                }
+
+
+                if (sum > 100) {
+                    sum = sum - parseFloat(document.form1.mid[j].id);
+                    document.form1.mid[j].checked = false;
+                    alert("Sum of the selection can't be more than 100 million");
+                    document.getElementById("msg").innerHTML = "Sum :" + sum.toFixed(2);
+                    return;
+                }
+
+
+            }
+
+            //function chkcontrol(j) {
+
+            //    var totalFwd = 0;
+            //    var sum = parseFloat(document.getElementById("msg").innerHTML);
+            for (var i = 0; i < document.form1.fwd.length; i++) {
+
+                if (document.form1.fwd[i].checked) {
+                    totalFwd = totalFwd + 1;
+                    sum = sum + parseFloat(document.form1.fwd[i].id);
+
+                }
+                document.getElementById("msg").innerHTML = "Sum :" + sum.toFixed(2);
+
+                if (totalFwd > 2) {
+                    sum = sum - parseFloat(document.form1.fwd[j].id);
+                    document.form1.fwd[j].checked = false;
+                    alert("Please Select only two forwards");
+
+
+                    document.getElementById("msg").innerHTML = "Sum :" + sum.toFixed(2);
+                    return;
+                }
+
+
+                if (sum > 100) {
+                    sum = sum - parseInt(document.form1.fwd[j].id);
+                    document.getElementById.fwd[j].checked = false;
+                    alert("Sum of the selection can't be more than 100 million");
+                    document.getElementById("msg").innerHTML = "Sum :" + sum.toFixed(2);
+                    return;
+                }
+
+            }
+
+        }
+
+
+
+        function countTeam() {
+            var teamTotal = 0;
+            var totalFwd = 0;
+            var totalDef = 0;
+            var totalMid = 0;
+            var totalGk = 0;
+            for (var i = 0; i < document.form1.fwd.length; i++) {
+                var myfwd = document.form1.fwd[i];
+                if (myfwd.checked == true) {
+                    totalFwd = totalFwd + 1;
+                    teamTotal += 1;
+                }
+            }
+            for (var i = 0; i < document.form1.def.length; i++) {
+
+                if (document.form1.def[i].checked) {
+                    totalDef = totalDef + 1;
+                    teamTotal += 1;
+                }
+            }
+            for (var i = 0; i < document.form1.mid.length; i++) {
+
+                if (document.form1.mid[i].checked) {
+                    totalMid = totalMid + 1;
+                    teamTotal += 1;
+                }
+            }
+            for (var i = 0; i < document.form1.gk.length; i++) {
+
+                if (document.form1.gk[i].checked) {
+                    totalGk = totalGk + 1;
+                    teamTotal += 1;
+                }
+            }
+            if (teamTotal != 11) {
+                alert("Your team must consist of 1 goalkeeper, 4 defenders, 4 midfielders and 2 forwards!");
+                return false;
+            }
+        }
+
+
+</script>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

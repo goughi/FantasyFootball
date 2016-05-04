@@ -38,17 +38,17 @@ namespace testfan2
                 role.Name = "Administrator";
                 roleManager.Create(role);
 
-                //Here we create a Admin super user who will maintain the website                 
+               // Here we create a Admin super user who will maintain the website
 
                 //var user = new ApplicationUser();
                 //user.UserName = "goughi";
                 //user.Email = "goughi@hotmail.com";
-                
+
                 //string userPWD = "1981TUESday";
 
-                //var chkUser = UserManager.Create(user, userPWD);
+               // var chkUser = UserManager.Create(user, userPWD);
 
-                ////Add default User to Role Admin  
+                //Add default User to Role Admin  
                 //if (chkUser.Succeeded)
                 //{
                 //    var result1 = UserManager.AddToRole(user.Id, "Administrator");
@@ -57,21 +57,21 @@ namespace testfan2
             }
 
             // creating paid user role   
-            if (!roleManager.RoleExists("PaidUser"))
-            {
-                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
-                role.Name = "PaidUser";
-                roleManager.Create(role);
+            //if (!roleManager.RoleExists("PaidUser"))
+            //{
+            //    var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+            //    role.Name = "PaidUser";
+            //    roleManager.Create(role);
 
-            }
+            //}
 
-            if (!roleManager.RoleExists("FreeUser"))
-            {
-                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
-                role.Name = "FreeUser";
-                roleManager.Create(role);
+            //if (!roleManager.RoleExists("FreeUser"))
+            //{
+            //    var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+            //    role.Name = "FreeUser";
+            //    roleManager.Create(role);
 
-            }
+            //}
         }
     }
 }

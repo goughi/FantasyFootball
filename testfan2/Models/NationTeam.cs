@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.ComponentModel.DataAnnotations.Schema;
-using testfan2.DAL;
+
 using System.Web;
 
 namespace testfan2.Models
@@ -24,6 +24,21 @@ namespace testfan2.Models
             get
             {
                 return "~/Images/" + NationCode + ".JPG";
+            }
+        }
+        public String JerseyPath
+        {
+            get
+            {
+                return "~/Images/Jerseys/" + NationCode + ".JPG";
+            }
+        }
+        public string Song
+        {
+            get
+            {
+                string s = "~/music/" + NationCode + ".mp3";
+                return s;
             }
         }
 

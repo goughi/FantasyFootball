@@ -1,0 +1,110 @@
+﻿@model testfan2.Models.FantasyLeague
+<style type="text/css">
+    .tftable {
+        font-size: 12px;
+        color: #333333;
+        width: 100%;
+        border-width: 1px;
+        border-color: #729ea5;
+        border-collapse: collapse;
+    }
+
+        .tftable th {
+            font-size: 12px;
+            background-color: #acc8cc;
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #729ea5;
+            text-align: left;
+        }
+        body{
+            background-image: url("Images/LeagueBackgrounds/GroupOfDeath.jpg");
+   
+        }
+        .tftable tr {
+            background-color: #d4e3e5;
+        }
+
+        .tftable td {
+            font-size: 12px;
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #729ea5;
+        }
+
+        .tftable tr:hover {
+            background-color: #ffffff;
+        }
+</style>
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+<body>
+    <div>
+        <h4>FantasyLeague</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.FantasyLeagueName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FantasyLeagueName)
+            </dd>
+
+        </dl>
+    </div>
+    <table class="tftable">
+        <tr>
+
+            <th>
+                Position
+            </th>
+            <th>
+                Team
+            </th>
+            <th>
+                Score
+            </th>
+
+            <th></th>
+        </tr>
+        @if (Model.FantasyTeams != null)
+        {
+            int i = 0;
+            var teams = (from r in Model.FantasyTeams
+                         select r).OrderByDescending(f => f.FirstRoundScore);
+            foreach (var team in teams)
+            {
+                i++;
+                <tr>
+                    <td>
+
+                        <p>@i</p>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => team.TeamName)
+                    </td>
+
+                    <td>
+
+                        @Html.DisplayFor(modelItem => team.FirstRoundScore)
+                    </td>
+                    <td>
+
+                        @Html.ActionLink("Details", "Details", new { id = team.TeamID })
+
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.FantasyLeagueId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>

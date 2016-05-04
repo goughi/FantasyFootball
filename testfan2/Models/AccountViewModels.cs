@@ -75,7 +75,7 @@ namespace testfan2.Models
         [Display(Name = "UserName")]
         public string UserName { get; set; }
 
-        [Required]
+       
         [Display(Name = "UserRoles")]
         public string UserRoles { get; set; }
 
@@ -89,6 +89,18 @@ namespace testfan2.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Surname")]
+        [StringLength(50, ErrorMessage = "Surname cannot be longer than 50 characters.")]
+        [Required(ErrorMessage = "You must enter a surname")]
+        public string CustomerSurname { get; set; }
+
+        [Display(Name = "First Name")]
+        [StringLength(50, ErrorMessage = "First name cannot be longer than 50 characters.")]
+        [Required(ErrorMessage = "You must enter a firstname")]
+        public string CustomerFirstName { get; set; }
+        public Nation SupportingNation { get; set; }
+        public System.DateTime? BirthDate { get; set; }
     }
 
     public class ResetPasswordViewModel

@@ -14,7 +14,7 @@ namespace testfan2
     {
         protected void Application_Start()
         {
-           // Database.SetInitializer<FantasyFootballContext>(new FantasyFootballInitializer());
+           // Database.SetInitializer<ApplicationDbContext>(new FantasyFootballInitializer());
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

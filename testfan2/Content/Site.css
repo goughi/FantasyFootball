@@ -22,3 +22,66 @@ select,
 textarea {
     max-width: 280px;
 }
+/* detail screens css */
+    .actionbox {
+        width: 90%;
+        padding-top: 20px;
+        padding: 20px;
+        background-color: #999999;
+        border-left: 10px solid #2ecc71;
+        display: inline-block;
+        display: table;
+        max-width: 800px;
+        margin: 5px;
+    }
+
+    .ashbox {
+        background-color: #34495e;
+        color: white;
+    }
+
+
+    .button {
+        display: inline-block;
+        font-weight: normal;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        background-image: none;
+        border: 1px solid transparent;
+        white-space: nowrap;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.428571429;
+        border-radius: 4px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+        font-family: 'PT Sans',helvetica;
+        margin: 29px 6px;
+    }
+
+    h1 {
+        margin: 0;
+        line-height: 95px;
+    }
+
+    .button, .button.green {
+        background: #69c773;
+        color: #FFF;
+        -webkit-box-shadow: 0 4px 0 0 #51a65f;
+        -moz-box-shadow: 0 4px 0 0 #51a65f;
+        box-shadow: 0 4px 0 0 #51a65f;
+       
+    }
+
+    .floatright {
+        float: right;
+    }
+
+    .floatleft {
+        float: left;
+    }
+  

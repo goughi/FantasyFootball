@@ -81,6 +81,10 @@ namespace testfan2.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    //var Grant = SignInManager.AuthenticationManager.AuthenticationResponseGrant;
+                    //string UserId = Grant.Identity.GetUserId();
+                    //return RedirectToAction("Index","FantasyTeam", new { userId = UserId });
+
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -141,8 +145,8 @@ namespace testfan2.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin"))
-                                            .ToList(), "Name", "Name");
+            //ViewBag.Name = new SelectList(context.Roles.Where(u => u.Name.Contains("Admin"))
+            //                                .ToList(), "Name", "Name");
             return View();
         }
 
@@ -156,7 +160,13 @@ namespace testfan2.Controllers
             if (ModelState.IsValid)
             {
                 
-                    var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                    var user = new ApplicationUser
+                    { UserName = model.Email,
+                        Email = model.Email,
+                        CustomerFirstName = model.CustomerFirstName,
+                        CustomerSurname = model.CustomerSurname,
+                        BirthDate = model.BirthDate,
+                        SupportingNation = model.SupportingNation};
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
@@ -168,13 +178,13 @@ namespace testfan2.Controllers
                         // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);  
                         // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");  
                         //Assign Role to user Here     
-                        await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles);
+                       // await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles);
                         //Ends Here   
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("create", "FantasyTeam", new { CustomerID = user.Id });
                     }
-                    ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin"))
-                                              .ToList(), "Name", "Name");
-                    AddErrors(result);
+                //ViewBag.Name = new SelectList(context.Roles.Where(u => u.Name.Contains("Admin"))
+                //                          .ToList(), "Name", "Name");
+                AddErrors(result);
                 }
 
                 // If we got this far, something failed, redisplay form  

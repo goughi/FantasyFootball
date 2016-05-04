@@ -3,14 +3,72 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using System.Security.Claims;
+using testfan2.Models;
+using System.Data;
+using System.Data.Entity;
 
 namespace testfan2.Controllers
 {
     [RequireHttps]
     public class HomeController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            if (claimsIdentity != null)
+            {
+          
+                var userIdClaim = claimsIdentity.Claims
+                    .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+
+                if (userIdClaim != null)
+                {
+                    var userIdValue = userIdClaim.Value;
+
+
+                    // var user = User.Identity.GetUserId();
+                    if (userIdValue != null)
+                    {
+                        //var team = new FantasyTeam();
+                       
+                        var team = db.FantasyTeams.Include(t => t.Players).Where(t => t.UserId == userIdValue).FirstOrDefault();
+                        if (team != null)
+                        {
+                       
+                            team.Players = db.FantasyTeams.Where(t => t.TeamID == team.TeamID).Single().Players;
+                            var teamName = team.TeamName;
+                            var owner = team.User.CustomerFirstName + " " + team.User.CustomerSurname;
+
+                            var gk = team.Players.Where(p => p.Position == Position.GoalKeeper).ToArray();
+                            var def = team.Players.Where(p => p.Position == Position.Defender).ToArray();
+                            var mid = team.Players.Where(p => p.Position == Position.Midfielder).ToArray();
+                            var fwd = team.Players.Where(p => p.Position == Position.Forward).ToArray();
+  
+                            ViewBag.DEF = def;
+                            ViewBag.GK = gk;
+                            ViewBag.MID = mid;
+                            ViewBag.FWD = fwd;
+                            ViewBag.TeamName = teamName;
+                            ViewBag.Owner = owner;
+
+                            //display top 5 players
+                            var top5Players = db.PlayerRoundStats.ToList().OrderByDescending(p => p.TotalPoints).Take(5);
+                            ViewBag.top5players = top5Players.ToArray();
+
+                            var top5Teams = db.FantasyTeams.ToList().OrderByDescending(t => t.FirstRoundScore).Take(5);
+                            ViewBag.top5teams = top5Teams.ToArray();
+                            return View(team);
+                        }
+                    }
+                }
+            }
+           
+          
             return View();
         }
 

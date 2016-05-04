@@ -1,0 +1,33 @@
+﻿@model testfan2.Models.FantasyTeam
+
+<div>
+    <h4>FantasyTeam</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TeamName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeamName)
+        </dd>
+
+    </dl>
+</div>
+
+@{ 
+    List<testfan2.ViewModels.FantasyTeamScoreUpdate> players = ViewBag.TeamScore;
+    int total = 0;
+    foreach(var player in players)
+    {
+        <p>@player.PlayerName   @player.Position @player.Team @player.Score</p>
+        total += player.Score;
+    }
+    <p>Total: @total</p>
+}
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TeamID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

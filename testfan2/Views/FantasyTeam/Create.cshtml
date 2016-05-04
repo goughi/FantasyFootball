@@ -4,63 +4,58 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Pick your team name and join one of our public leagues</h2>
 
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-group">
-        <h4>FantasyTeam</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="actionbox ashbox">
         <div class="form-group">
-            @Html.LabelFor(model => model.TeamName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <h4>FantasyTeam</h4>
+            <hr />
+            <h3>Choose your Formation</h3>
+            <h3>* Right now we only have 4-4-2</h3>
+            <img src="~/Images/formations/4-4-2.png" alt="Profile" width="150" height="150" class="floatright">
+
+            @Html.HiddenFor(model => model.UserId)
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="floatleft">
+                @Html.LabelFor(model => model.TeamName, htmlAttributes: new { @class = "control-label" })
+
                 @Html.EditorFor(model => model.TeamName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.TeamName, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.CustomerId, "CustomerId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayName(model => model.CustomerId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.FantasyLeagueID, "FantasyLeagueID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+
+                <br />
+                <br />
+
+                @Html.LabelFor(model => model.FantasyLeagueID, "Fantasy Leagues", htmlAttributes: new { @class = "control-label" })
+
+
                 @Html.DropDownList("FantasyLeagueID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.FantasyLeagueID, "", new { @class = "text-danger" })
+
+
+            </div>
+
+        </div>
+            <div class="form-group floatright">
+                <div class="floatright">
+                    <input type="submit" value="Add Team" class="button" />
+                </div>
             </div>
         </div>
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.totalValue, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.totalValue, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.totalValue, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-  
-           
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+     
+        }
+       
+        <div>
+            @Html.ActionLink("Back to List", "Index")
         </div>
-  </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

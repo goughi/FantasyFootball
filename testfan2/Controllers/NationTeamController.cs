@@ -7,14 +7,14 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using testfan2.Models;
-using testfan2.DAL;
+
 
 
 namespace testfan2.Controllers
 {
     public class NationTeamController : Controller
     {
-        private FantasyFootballContext db = new FantasyFootballContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: NationTeam
         public ActionResult Index()
@@ -37,7 +37,10 @@ namespace testfan2.Controllers
             return View(nationTeam);
         }
 
+
+
         // GET: NationTeam/Create
+        [Authorize(Roles = "Administrator")]
         public ActionResult Create()
         {
             return View();
@@ -48,7 +51,7 @@ namespace testfan2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "NationCode,Nation")] NationTeam nationTeam)
+        public ActionResult Create([Bind(Include = "NationCode,Nation,TeamGoalWeight")] NationTeam nationTeam)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +64,7 @@ namespace testfan2.Controllers
         }
 
         // GET: NationTeam/Edit/5
+        [Authorize(Roles = "Administrator")]
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -80,7 +84,7 @@ namespace testfan2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "NationCode,Nation")] NationTeam nationTeam)
+        public ActionResult Edit([Bind(Include = "NationCode,Nation,TeamGoalWeight")] NationTeam nationTeam)
         {
             if (ModelState.IsValid)
             {
@@ -92,6 +96,7 @@ namespace testfan2.Controllers
         }
 
         // GET: NationTeam/Delete/5
+        [Authorize(Roles = "Administrator")]
         public ActionResult Delete(string id)
         {
             if (id == null)

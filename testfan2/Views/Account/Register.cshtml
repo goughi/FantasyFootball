@@ -36,12 +36,37 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.Label("user Role", new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.CustomerFirstName, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @*@Html.DropDownList("Name")*@
-            @Html.DropDownList("UserRoles", (SelectList)ViewBag.Name, " ")
+            @Html.TextBoxFor(m => m.CustomerFirstName, new { @class = "form-control" })
         </div>
     </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.CustomerSurname, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.CustomerSurname, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.BirthDate, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.SupportingNation, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.SupportingNation, new { @class = "form-control" })
+        </div>
+    </div>
+    @*<div class="form-group">*@
+        @*@Html.Label("user Role", new { @class = "col-md-2 control-label" })*@
+        @*<div class="col-md-10">*@
+            @*@Html.DropDownListFor(m=>m.UserRoles, (SelectList)ViewBag.Name, new { @class = "form-control" })*@
+            @*@Html.DropDownList("UserRoles", (SelectList)ViewBag.Name, " ")*@
+        @*</div>
+    </div>*@
+
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" class="btn btn-default" value="Register" />

@@ -8,14 +8,14 @@ using System.Web;
 using System.Web.Mvc;
 using testfan2.Models;
 using PagedList;
-using testfan2.DAL;
+
 
 
 namespace testfan2.Controllers
 {
     public class PlayerController : Controller
     {
-        private FantasyFootballContext db = new FantasyFootballContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Player
         public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? page)
@@ -24,7 +24,7 @@ namespace testfan2.Controllers
 
             ViewBag.CurrentSort = sortOrder;
             ViewBag.TeamSortParm = String.IsNullOrEmpty(sortOrder) ? "Team_desc" : "";
-            ViewBag.PointsSortParm = sortOrder == "TotalPoints" ? "points_desc" : "TotalPoints";
+           // ViewBag.PointsSortParm = sortOrder == "TotalPoints" ? "points_desc" : "TotalPoints";
             ViewBag.PositionSortParm = sortOrder == "Position" ? "position_desc" : "Position";
             ViewBag.ValueSortParm = sortOrder == "Value" ? "value_desc" : "Value";
 
@@ -48,12 +48,12 @@ namespace testfan2.Controllers
                 case "Team_desc":
                     players = players.OrderByDescending(r => r.NationTeam.NationCode);
                     break;
-                case "TotalPoints":
-                    players = players.OrderBy(r => r.TotalPoints);
-                    break;
-                case "points_desc":
-                    players = players.OrderByDescending(r => r.TotalPoints);
-                    break;
+                //case "TotalPoints":
+                //    players = players.OrderBy(r => r.TotalPoints);
+                //    break;
+                //case "points_desc":
+                //    players = players.OrderByDescending(r => r.TotalPoints);
+                //    break;
                 case "Postion":
                     players = players.OrderBy(r => r.Position);
                     break;
@@ -72,6 +72,7 @@ namespace testfan2.Controllers
             }
             int pageSize = 10;
             int pageNumber = (page ?? 1);
+           
             return View(players.ToPagedList(pageNumber, pageSize));
         }
 
@@ -89,11 +90,13 @@ namespace testfan2.Controllers
             }
             return View(player);
         }
-       // [Authorize(Roles = "Admin")]
+
         // GET: Player/Create
+        [Authorize(Roles = "Administrator")]
         public ActionResult Create()
         {
-            Player player = new Player();
+          //  var id = db.Players.Max(i => i.PlayerID) + 1;
+            Player player = new Player() { DateOfBirth = DateTime.Now};
             ViewBag.NationCode = new SelectList(db.NationTeams, "NationCode", "NationCode");
             return View(player);
         }
@@ -103,7 +106,7 @@ namespace testfan2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PlayerID,PlayerFirstname,PlayerSurname,Position,DateOfBirth,PlayerValue,NationCode")] Player player)
+        public ActionResult Create([Bind(Include = "PlayerID,PlayerFirstname,PlayerSurname,Position,DateOfBirth,PlayerValue,NationCode,GoalWeight")] Player player)
         {
             if (ModelState.IsValid)
             {
@@ -114,7 +117,7 @@ namespace testfan2.Controllers
 
             return View(player);
         }
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Administrator")]
         // GET: Player/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -135,7 +138,7 @@ namespace testfan2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PlayerID,PlayerFirstname,PlayerSurname,Position,DateOfBirth,PlayerValue,NationCode")] Player player)
+        public ActionResult Edit([Bind(Include = "PlayerID,PlayerFirstname,PlayerSurname,Position,DateOfBirth,PlayerValue,NationCode,GoalWeight")] Player player)
         {
             if (ModelState.IsValid)
             {
@@ -145,7 +148,7 @@ namespace testfan2.Controllers
             }
             return View(player);
         }
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Administrator")]
         // GET: Player/Delete/5
         public ActionResult Delete(int? id)
         {

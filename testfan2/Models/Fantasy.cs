@@ -5,7 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.ComponentModel.DataAnnotations.Schema;
-using testfan2.DAL;
+
 
 namespace testfan2.Models
 {
@@ -90,29 +90,34 @@ namespace testfan2.Models
 
     public class Customer
     {
-        public int CustomerID { get; set; }
-     
-        [Display(Name = "Surname")]
-        [StringLength(50, ErrorMessage = "Surname cannot be longer than 50 characters.")]
-        [Required(ErrorMessage ="You must enter a surname")]
-        public String CustomerSurname { get; set; }
+    //    public int CustomerID { get; set; }
+    //    [Key]
+    //    public string UserId { get; set; }
+
+    //    [ForeignKey("UserId")]
+    //    public virtual ApplicationUser User { get; set; }
+
+    //    [Display(Name = "Surname")]
+    //    [StringLength(50, ErrorMessage = "Surname cannot be longer than 50 characters.")]
+    //    [Required(ErrorMessage ="You must enter a surname")]
+    //    public String CustomerSurname { get; set; }
       
-        [Display(Name = "First Name")]
-        [StringLength(50, ErrorMessage = "First name cannot be longer than 50 characters.")]
-        [Required(ErrorMessage = "You must enter a firstname")]
-        public String CustomerFirstName { get; set; }
+    //    [Display(Name = "First Name")]
+    //    [StringLength(50, ErrorMessage = "First name cannot be longer than 50 characters.")]
+    //    [Required(ErrorMessage = "You must enter a firstname")]
+    //    public String CustomerFirstName { get; set; }
 
-        [Required(ErrorMessage = "Email is required")]
-        [DataType(DataType.EmailAddress)]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public String CustomerEmail { get; set; }
+    //    [Required(ErrorMessage = "Email is required")]
+    //    [DataType(DataType.EmailAddress)]
+    //    [EmailAddress]
+    //    [Display(Name = "Email")]
+    //    public String CustomerEmail { get; set; }
 
-        [Required(ErrorMessage = "Mobile is required")]
-        [DataType(DataType.PhoneNumber)]
-        [Phone]
-        [Display(Name = "Mobile number")]
-        public String CustomerPhoneNumber { get; set; }
+    //    [Required(ErrorMessage = "Mobile is required")]
+    //    [DataType(DataType.PhoneNumber)]
+    //    [Phone]
+    //    [Display(Name = "Mobile number")]
+    //    public String CustomerPhoneNumber { get; set; }
     }
 
     public class FantasyTeam
@@ -121,32 +126,41 @@ namespace testfan2.Models
         private const int teamSize = 11;
 
         //Team Id
-        [Key Column(Order = 0)]
+        [Key]
         public int TeamID { get; set; }
 
+        [ForeignKey("User")]
+        [Column(Order = 1)]
+        public string UserId { get; set; }
+
+        
+        public virtual ApplicationUser User { get; set; }
         //Team Name
         [Required(ErrorMessage = "You must enter a Team Name")]
         [StringLength(50, MinimumLength = 3)]
+        [Display(Name = "Team Name")]
         public String TeamName { get; set; }
 
-        [Key, Column(Order = 2)]
-        public int CustomerId { get; set; }
-        public virtual Customer Customer { get; set; }
+        
+        //public int CustomerId { get; set; }
+        //public virtual Customer Customer { get; set; }
 
-        [Key, Column(Order = 1)]
-        public string UserId { get; set; }
-        [ForeignKey("UserId")]
-        public virtual ApplicationUser User { get; set; }
-
-        [Key, Column (Order = 3)]
-        public int? FantasyLeagueID { get; set; }
-        [ForeignKey("FantasyLeagueID")]
+        //[Key, Column(Order = 1)]
+        //public string UserId { get; set; }
+        //[ForeignKey("UserId")]
+        //public virtual ApplicationUser User { get; set; }
+        public bool IsConfirmed { get; set; }
+       public int FirstRoundScore { get; set; }
+        [ForeignKey("FantasyLeague")]
+        [Column(Order = 2)]
+        public int FantasyLeagueID { get; set; }
+    
         public virtual FantasyLeague FantasyLeague { get; set; }
 
 
         public virtual ICollection<Player> Players { get; set; }
 
-        FantasyFootballContext db = new FantasyFootballContext();
+        ApplicationDbContext db = new ApplicationDbContext();
         public const int maxGk = 1;
         public const int maxDf = 4;
         public const int maxMf = 4;
@@ -229,14 +243,15 @@ namespace testfan2.Models
         //foreign keys
         public int? FixtureId { get; set; }
         public virtual Fixture Fixture { get; set; }
-        public int? PlayerID { get; set; }
+        public int PlayerID { get; set; }
         public virtual Player Player { get; set; }
 
         [Range(0, 90, ErrorMessage = "Player can only play between 0 and 90 minutes")]
         public int MinutesPlayed { get; set; }
         // public int GoalsScored { get; set; }
         //public int Assist { get; set; }
-         public int CleanSheet { get; set; }
+        [UIHint("Cleansheet")]
+        public bool CleanSheet { get; set; }
          public int GoalsConceded { get; set; }
         //public int OwnGoal { get; set; }
         public int goalScored { get; set; }
@@ -277,9 +292,17 @@ namespace testfan2.Models
                     { points -= 2; }
                     if (RedCarded == true)
                     { points -= 6; }
+                    if (CleanSheet == true)
+                    { points += 5; }
+                    if (ManOfTheMatch == true)
+                    { points += 4; }
                     for (int i = 0; i < goalScored;i++) 
                     {
                         points += 5;
+                    }
+                    for (int i = 0; i < GoalsConceded; i++)
+                    {
+                        points -= 1;
                     }
                 }
                 return points;

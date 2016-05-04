@@ -1,33 +1,372 @@
-﻿@{
+﻿<!DOCTYPE html>
+<html>
+@{
     ViewBag.Title = "Contact";
 }
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
+<head>
+    <style>
+                input[type=table]:enabled {
+                    background: #ffff00;
+                }
 
-<div class="container-fluid bg-grey">
-    <h2 class="text-center">Contact</h2>
-    <div class="row">
-        <div class="col-sm-5">
-            <p>Please contact us and we'll get back to you within 24 hours.</p>
-            <p><span class="glyphicon glyphicon-map-marker"></span> Limerick, Ire</p>
-            <p><span class="glyphicon glyphicon-phone"></span> +353 863949542</p>
-            <p><span class="glyphicon glyphicon-envelope"></span> goughi@hotmail.com</p>
-        </div>
-        <div class="col-sm-7">
+                input[type=table]:disabled {
+                    background: #dddddd;
+                }
+
+                :-ms-input-placeholder {
+                    color: red;
+                }
+
+
+                .pitch {
+                    width: 60%;
+                    margin: 10px 30% 10px 11%;
+                    padding: 10px 0;
+                    border-radius: 10px;
+                    background-color: #70AB8F;
+                    border: 4px solid;
+                    height: 75%;
+                    top: 20%;
+                    left: 20%;
+                    right: 6%;
+                    position: absolute;
+                    float: right;
+                }
+
+                header {
+                    background-color: #E4DBBF;
+                    text-align: center;
+                    padding-top: 12px;
+                    padding-bottom: 8px;
+                    margin-top: -11px;
+                    margin-bottom: -8px;
+                    border-radius: 10px 10px 0 0;
+                    color: #DC5B21;
+                }
+
+                #stat p{
+                    opacity: 0;
+                
+                }
+
+                #stat1 p{
+                    opacity: 0;
+                    
+                }
+                input[type=text] {
+                    margin-bottom: 20px;
+                    margin-top: 10px;
+                    width: 100%;
+                    padding: 15px;
+                    border-radius: 5px;
+                    border: 1px solid #383127;
+                    font-size: small;
+                }
+
+                    input[type=text]:focus, textarea:focus {
+                        border-color: #70AB8F;
+                    }
+
+                .usericon input {
+                    padding-left: 25px;
+                    font-size: small;
+                    background-color: #69c773;
+                    color: #FFF;
+                }
+
+                .usericon:before {
+                    height: 100%;
+                    width: 25px;
+                    display: -webkit-box;
+                    -webkit-box-pack: center;
+                    -webkit-box-align: center;
+                    position: absolute;
+                    content: "\e008";
+                    font-family: 'Glyphicons Halflings';
+                    pointer-events: none;
+                }
+
+                /*#goal{
+            opacity: 0;
+            margin-top: 25px;
+            font-size: 21px;
+            text-align: center;
+            -webkit-transition: opacity 2s ease-in;
+            -moz-transition: opacity 2s ease-in;
+            -o-transition: opacity 2s ease-in;
+            -ms-transition: opacity 2s ease-in;
+            transition: opacity 2s ease-in;
+        }​*/
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script>
+$(function () {
+            $('#stat p').each(function (i) {
+                $(this).delay((i++) * 1000).fadeTo(2000, 1);
+            })
+});
+$(function () {
+    $('#stat1 p').each(function (i) {
+        $(this).delay((i++) * 1100).fadeTo(2000, 1);
+    })
+});
+        //$(".stat1").hide();
+        //$(".stat2").hide();
+
+        //setTimeout(function () {
+        //    $("#stat1").show();
+        //}, 2000);
+
+        //setTimeout(function () {
+        //    $("#stat2").show();
+        //}, 4000);</script>
+</head>
+<body>
+    @*<div class="container-fluid bg-grey">
+            <h2 class="text-center">Contact</h2>
             <div class="row">
-                <div class="col-sm-6 form-group">
-                    <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
+                <div class="col-sm-5">
+                    <p>Please contact us and we'll get back to you within 24 hours.</p>
+                    <p><span class="glyphicon glyphicon-map-marker"></span> Limerick, Ire</p>
+                    <p><span class="glyphicon glyphicon-phone"></span> +353 863949542</p>
+                    <p><span class="glyphicon glyphicon-envelope"></span> goughi@hotmail.com</p>
                 </div>
-                <div class="col-sm-6 form-group">
-                    <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
+                <div class="col-sm-7">
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                            <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
+                        </div>
+                    </div>
+                    <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
+                    <div class="row">
+                        <div class="col-sm-12 form-group">
+                            <button class="btn btn-default pull-right" type="submit">Send</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
-            <div class="row">
-                <div class="col-sm-12 form-group">
-                    <button class="btn btn-default pull-right" type="submit">Send</button>
+        </div>*@
+    @*<div class="actionbox ashbox">
+
+                <h5 class="floatleft">Team: @ViewBag.TeamName</h5>
+                <h5 class="floatleft">Manager: - @ViewBag.Owner</h5>
+
+        </div>
+        <br />
+        <div class="actionbox ashbox" style="position: relative; height: 500px;" >
+
+            <div class="form-group" style="position: absolute;  left: 5%; top: 45%; ">
+                <div class="floatleft">
+                    <span class="usericon">
+                        <input class="form-control" id="name" name="name"  disabled placeholder="add goalkeeper" />
+                    </span>
                 </div>
             </div>
+            <div class="form-group" style="position: absolute; left: 15%; top: 5%;">
+                <div class="floatleft">
+                    <span class="usericon">
+                        <input class="form-control" id="def1" name="def1"  disabled placeholder="add defender" />
+                    </span>
+                </div>
+            </div>
+            <div class="form-group" style="position: absolute; left: 15%; top: 25%;">
+
+                    <span class="usericon">
+                        <input class="form-control" id="def2" name="def2"  disabled placeholder="add defender" />
+                    </span>
+
+            </div>
+            <div class="form-group" style="position: absolute; left: 15%; top: 65%;">
+                <div class="floatleft">
+                    <span class="usericon">
+                        <input class="form-control" id="name" name="name"  disabled placeholder="add defender" />
+                    </span>
+                </div>
+            </div>
+            <div class="form-group" style="position: absolute; left: 15%; top: 85%;">
+                <div class="floatleft">
+                    <span class="usericon">
+                        <input class="form-control" id="name" name="name"  disabled placeholder="add defender" />
+                    </span>
+                </div>
+            </div>
+            <div class="form-group" style="position: absolute;  left: 45%; top: 5%;">
+                <div class="floatleft">
+                    <span class="usericon">
+                        <input class="form-control" id="name" name="name"  disabled placeholder="Midfielder" />
+                    </span>
+                </div>
+            </div>
+            <div class="form-group" style="position: absolute;  left: 45%; top: 25%;">
+                <div class="floatleft">
+                    <span class="usericon">
+                        <input class="form-control" id="name" name="name"  disabled placeholder="Midfielder" />
+                    </span>
+                </div>
+            </div>
+            <div class="form-group" style="position: absolute;  left: 45%; top:65%;">
+                <div class="floatleft">
+                    <span class="usericon">
+                        <input class="form-control" id="name" name="name"  disabled placeholder="Midfielder" />
+                    </span>
+                </div>
+            </div>
+            <div class="form-group" style="position: absolute; left: 45%; top:85%">
+                <div class="floatleft">
+                    <span class="usericon">
+                        <input class="form-control" id="name" name="name"  disabled placeholder="Midfielder" />
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group" style="position: absolute; right: 2%; top: 35%;">
+                <div class="floatleft">
+                    <span class="usericon">
+                        <input class="form-control" id="name" name="name"  disabled placeholder="Forward" />
+                    </span>
+                </div>
+            </div>
+            <div class="form-group" style="position: absolute;   right: 2%; top: 55%;">
+                <div class="floatleft">
+                    <span class="usericon">
+                        <input class="form-control" id="name" name="name"  disabled placeholder="Forward" />
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group" style="position: absolute; right: 2%; top: 80%;">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" onclick="return countTeam();" class="button" />
+                </div>
+            </div>
+
         </div>
-    </div>
+        <div class="actionbox ashbox">
+
+                <h5 class="floatleft">Sum of the values can't exceed 100 million.</h5>
+                <h5 class="floatleft" id="msg"> </h5>
+
+        </div>*@
+
+    @{
+        ViewBag.Title = "Edit";
+    }
+
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <h2>Edit</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+
+
+
+        List<string> homeScorers = new List<string>() { "martin", "john", "Darren" };
+        List<string> awayScorers = new List<string>() { "martin", "john", "Darren" };
+        List<string> homeYellows = new List<string>() { "martin", "john", "Darren" };
+        List<string> homeReds = new List<string>() { "martin", "john", "Darren" };
+        List<string> awayYellows = new List<string>() { "martin", "john", "Darren" };
+        List<string> awayReds = new List<string>() { "martin", "john", "Darren" };
+        int HomeTeamScore = 3;
+        int AwayTeamScore = 3;
+
+
+
+        @Html.Label("HomeTeamScore")
+
+
+        {
+            <label>@HomeTeamScore</label>
+
+        }
+
+<div class="actionbox">
+       @{ 
+           {
+               int i = 0;
+
+               foreach (var s in homeScorers)
+               {
+                <div id="stat">
+                    <p><span class="label label-success">goal</span>@s</p>
+                </div>
+                   // sco[i] = s.PlayerID.ToString();
+
+                   i++;
+               }
+
+               foreach (var y in homeYellows)
+               {
+                <div id="stat">
+                    <p><span class="label label-warning">yellow card</span>@y</p>
+                </div>
+               }
+
+               foreach (var r in homeReds)
+               {
+                <div id="stat" >
+                    <p><span class="label label-danger">red card</span>@r</p>
+                </div>
+               }
+
+           }
+
+
+        <div class="form-group">
+            @Html.Label("3")
+            <div class="col-md-10">
+
+               
+
+                @{
+                    int j = 0;
+
+                    foreach (var s in awayScorers)
+                    {
+                <div id="stat1">
+                        <p><span class="label label-success">goal</span>@s[j]</p>
+                    </div>
+                        j++;
+                    }
+
+                    foreach (var y in awayYellows)
+                    {
+                        <div id="stat1">
+                        <p><span class="label label-warning">yellow card</span>@y[j]</p>
+                        </div>
+                    }
+
+                    foreach (var r in awayReds)
+                    {
+                        <h6><span class="label label-danger">red card</span>@r[j]</h6>
+
+                    }
+                    {
+                        <div id="stat1">
+                      <p> <label>@AwayTeamScore</label></p>
 </div>
+                    }
+                }
+
+            </div>
+
+        </div>
+    
+                    }
+    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Continue" class="btn btn-default" />
+                                        </div>
+                                    </div>
+
+                    }
+</body>
+</html>
