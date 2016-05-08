@@ -41,6 +41,8 @@ namespace testfan2.Controllers
                             ViewBag.TeamId = teamId;
                             var round = RoundStage.FirstRound;
                             ViewBag.RoundStage = round;
+                            var leagueId = team.FantasyLeagueID;
+                            ViewBag.LeagueId = leagueId;
                         }
                     }
                 }
@@ -456,30 +458,19 @@ namespace testfan2.Controllers
 
                     }
 
-                    //var awayScorersHS = new HashSet<string>(awayscorer);
-                    //var fixtureAwayScorers = new HashSet<int>(fixtureResult.AwayTeamScorer.Select(p => p.PlayerID));
-                    //foreach (var player in db.Players)
-                    //{
-                    //    if (awayScorersHS.Contains(player.PlayerID.ToString()))
-                    //    {
-                    //        if (!fixtureAwayScorers.Contains(player.PlayerID))
-                    //        {
-                    //            fixtureResult.AwayTeamScorer.Add(player);
-                    //        }
-                    //    }
-                    //    else
-                    //    {
-                    //        if (fixtureAwayScorers.Contains(player.PlayerID))
-                    //        {
-                    //            fixtureResult.AwayTeamScorer.Remove(player);
-                    //        }
-                    //    }
-                    //}
-                    // var updatedFixture = db.Fixtures.Include(i => i.HomeTeamScorer).Include(i => i.AwayTeamScorer).Where(i => i.FixtureId == id).Single();
+                 
                     fixtureResult.gamePlayed = true;
                     db.SaveChanges();
                     playerStat(fixtureResult, awayscorer, homescorer, homeredcards, homeyellowcards, awayredcards, awayyellowcards);
-                    if (fixtureResult.RoundStage == RoundStage.FirstRound)
+
+                    var rndOneFixtures = db.Fixtures.ToList().Where(f => f.RoundStage == RoundStage.FirstRound);
+                    var rndTwoFixtures = db.Fixtures.ToList().Where(f => f.RoundStage == RoundStage.SecondRound);
+                    if (fixtureResult.RoundStage == RoundStage.FirstRound && rndOneFixtures.All(c => c.gamePlayed == true)|| (fixtureResult.RoundStage == RoundStage.SecondRound && rndTwoFixtures.All(c => c.gamePlayed == true)))
+                    {
+                        UpdateLeagues(fixtureResult);
+                    }
+                
+                        if (fixtureResult.RoundStage == RoundStage.FirstRound)
                     {
                         return RedirectToAction("Index");
                     }
@@ -503,6 +494,61 @@ namespace testfan2.Controllers
             ViewBag.HomeTeamNationCode = new SelectList(db.NationTeams, "NationCode", "NationCode", fixtureResult.HomeTeamNationCode);
             return View(fixtureResult);
         }
+        private void UpdateLeagues(Fixture fixture)
+        {
+            if (fixture.RoundStage == RoundStage.FirstRound)
+            {
+                var fixtures = db.Fixtures.ToList().Where(f => f.RoundStage == RoundStage.FirstRound);
+
+
+                var fantasyTeams = db.FantasyTeams.ToList();
+
+                foreach (var team in fantasyTeams)
+                {
+                    var totalScore = 0;
+                    foreach (var player in team.Players)
+                    {
+                        foreach (var f in fixtures)
+                        {
+                            var stat = db.PlayerRoundStats.ToList().Where(s => s.FixtureId == f.FixtureId && s.PlayerID == player.PlayerID).SingleOrDefault();
+                            if (stat != null)
+                            {
+                                totalScore += stat.TotalPoints;
+                            }
+                        }
+                    }
+                    team.FirstRoundScore = totalScore;
+                    db.SaveChanges();
+                }
+            }
+            else { 
+            var fixtures = db.Fixtures.ToList().Where(f => f.RoundStage == RoundStage.SecondRound);
+
+
+            var fantasyTeams = db.FantasyTeams.ToList();
+
+            foreach (var team in fantasyTeams)
+            {
+                var totalScore = 0;
+                foreach (var player in team.Players)
+                {
+                    foreach (var f in fixtures)
+                    {
+                        var stat = db.PlayerRoundStats.ToList().Where(s => s.FixtureId == f.FixtureId && s.PlayerID == player.PlayerID).SingleOrDefault();
+                        if (stat != null)
+                        {
+                            totalScore += stat.TotalPoints;
+                        }
+                    }
+                }
+
+                team.SecondRoundScore = totalScore;
+                db.SaveChanges();
+            }
+
+        }
+    }
+        
 
         private void playerStat(Fixture fixtureResult, string[] awayscorer, string[] homescorer, string[] homeredcards, string[] homeyellowcards, string[]awayredcards, string[]awayyellowcards)
         {

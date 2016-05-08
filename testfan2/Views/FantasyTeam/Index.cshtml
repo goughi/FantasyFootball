@@ -1,0 +1,72 @@
+﻿@model testfan2.Models.FantasyTeam
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div>
+    <h4>FantasyTeam</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.User.CustomerSurname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.CustomerSurname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FantasyLeague.FantasyLeagueName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FantasyLeague.FantasyLeagueName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TeamName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeamName)
+        </dd>
+
+    </dl>
+</div>
+<table>
+    <tr class="head">
+        <th></th>
+        <th></th>
+        <th>Position</th>
+        <th>Value</th>
+    </tr>
+
+    @foreach (var player in Model.Players)
+    {
+        <tr>
+            <th>
+                @player.PlayerFirstname
+            </th>
+            <th>
+                @player.PlayerSurname
+            </th>
+            <th>
+                @player.Position
+            </th>
+            <th>
+                @player.PlayerValue
+
+            </th>
+        </tr>
+    }
+
+</table>
+
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { TeamID = Model.TeamID }) |
+        @Html.ActionLink("ViewScore", "ViewScore", new { TeamID = Model.TeamID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>

@@ -1,0 +1,283 @@
+﻿@model testfan2.Models.Fixture
+
+
+<style>
+        #statGoal p{
+                    opacity: 0;
+                
+                }
+        #statYellow p{
+            opacity: 0;
+        }
+         #statRed p{
+            opacity: 0;
+        }
+         #statGoal1 p{
+                    opacity: 0;
+                
+                }
+        #statYellow1 p{
+            opacity: 0;
+        }
+         #statRed1 p{
+            opacity: 0;
+        }
+
+                #statFinal p{
+                    opacity: 0;
+                    
+                }
+                #box1 {
+		
+		width:400px;
+        float: left;
+
+	}
+	#box2 {
+		
+		width:400px;
+        float: left;
+	}
+    	#box3 {
+		
+		width:810px;
+        clear:both;
+	}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script>
+$(function () {
+            $('#statGoal p').each(function (i) {
+                $(this).delay((i++) * 1000).fadeTo(2000, 1);
+            })
+});
+$(function () {
+    $('#statYellow p').each(function (i) {
+        $(this).delay((i++) * 1100).fadeTo(2000, 1);
+    })
+});
+$(function () {
+    $('#statRed p').each(function (i) {
+        $(this).delay((i++) * 1100).fadeTo(2000, 1);
+    })
+});
+$(function () {
+    $('#statGoal1 p').each(function (i) {
+        $(this).delay((i++) * 1000).fadeTo(2000, 1);
+    })
+});
+$(function () {
+    $('#statYellow1 p').each(function (i) {
+        $(this).delay((i++) * 1100).fadeTo(2000, 1);
+    })
+});
+$(function () {
+    $('#statRed1 p').each(function (i) {
+        $(this).delay((i++) * 1100).fadeTo(2000, 1);
+    })
+});
+$(function () {
+    $('#statFinal p').each(function (i) {
+        $(this).delay((i++) * 1900).fadeTo(2000, 1);
+    })
+});
+        </script>
+
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+@if (Model.AwayTeamNationCode == "IRE" || Model.HomeTeamNationCode == "IRE")
+{
+    <audio controls loop autoplay>
+       
+        <source src="~/music/IRE.mp3" type="audio/mp3">
+        Your browser does not support the audio tag.
+    </audio>
+}
+@if (Model.AwayTeamNationCode != "IRE" && Model.HomeTeamNationCode != "IRE" && (Model.AwayTeamNationCode == "WAL" || Model.HomeTeamNationCode == "WAL"))
+{
+    <audio controls loop autoplay>
+
+        <source src="~/music/WAL.mp3" type="audio/mp3">
+        Your browser does not support the audio tag.
+    </audio>
+}
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+        <h4>Live Action</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.FixtureId)
+
+
+    List<testfan2.ViewModels.ScorerIndexData>
+                                homeScorers = ViewBag.HomeScorers;
+    List<testfan2.ViewModels.ScorerIndexData>
+                            awayScorers = ViewBag.AwayScorers;
+    List<testfan2.ViewModels.ScorerIndexData>
+                          homeYellows = ViewBag.HomeYellows;
+    List<testfan2.ViewModels.ScorerIndexData>
+                            homeReds = ViewBag.HomeReds;
+    List<testfan2.ViewModels.ScorerIndexData>
+                       awayYellows = ViewBag.AwayYellows;
+    List<testfan2.ViewModels.ScorerIndexData>
+                            awayReds = ViewBag.AwayReds;
+    testfan2.ViewModels.ScorerIndexData
+                            motm = ViewBag.MOTM;
+
+
+
+    <div class="actionbox ashbox">
+        @{
+
+        <h1 class="floatleft">
+            @Html.DisplayFor(model => model.HomeTeam.Nation)
+        </h1>
+        <h1 class="floatright">
+            @Html.DisplayFor(model => model.AwayTeam.Nation)
+        </h1>
+            <h1 class="floatright" style="margin-right: 300px;">-V-</h1> 
+            }
+</div>
+            int i = 0;
+
+
+<div class="actionbox ashbox" id="box1">
+        @{
+            foreach (var s in homeScorers)
+            {
+            <div id="statGoal" >
+                <p> <span class="label label-success">goal</span>@s.playerName  </p>
+                <input type="hidden" name="homescorer" value="@s.playerId" />
+            </div>
+                // sco[i] = s.PlayerID.ToString();
+
+                i++;
+            }
+
+            foreach (var y in homeYellows)
+            {
+            <div id="statYellow">
+                <p><span class="label label-warning">yellow card</span>@y.playerName</p>
+                <input type="hidden" name="homeyellowcards" value="@y.playerId" />
+            </div>
+            }
+
+            foreach (var r in homeReds)
+            {
+                <div id="statRed">
+            <p><span class="label label-danger">red card</span>@r.playerName</p>
+            <input type="hidden" name="homeredcards" value="@r.playerId" />
+                    </div>
+            }
+            }
+    </div>
+
+
+    <div class="actionbox ashbox" id="box2">
+        @{
+            foreach (var s in awayScorers)
+            {
+                <div id="statGoal1">
+                    <p> <span class="label label-success">goal</span>@s.playerName  </p>
+                    <input type="hidden" name="homescorer" value="@s.playerId" />
+                </div>
+                // sco[i] = s.PlayerID.ToString();
+
+                i++;
+            }
+
+            foreach (var y in awayYellows)
+            {
+                <div id="statYellow1">
+                    <p><span class="label label-warning">yellow card</span>@y.playerName</p>
+                    <input type="hidden" name="homeyellowcards" value="@y.playerId" />
+                </div>
+            }
+
+            foreach (var r in awayReds)
+            {
+                <div id="statRed1">
+                    <p><span class="label label-danger">red card</span>@r.playerName</p>
+                    <input type="hidden" name="homeredcards" value="@r.playerId" />
+                </div>
+            }
+
+
+        }
+
+    </div>
+    <div class="actionbox ashbox" id="box3">
+        <div id="statFinal">
+       <p> <h3>Final Score</h3>
+        <h5 class="floatleft"><label>@Model.HomeTeamScore</label></h5>
+       
+        <h5 class="floatright"><label>@Model.AwayTeamScore</label></h5>
+           <h5 class="floatright" style="margin-right:340px;">--</h5>
+    <h6 style="clear:both;"><span class="label label-info">*</span>@motm.playerName</h6>
+            <input type="hidden" name="motm" value="@motm.playerId" /></p>
+            </div>
+        </div>
+
+
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.AwayTeamScore, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.AwayTeamScore, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AwayTeamScore, "", new { @class = "text-danger" })
+                @{
+                    <label>@Model.AwayTeamScore</label>
+
+                }
+                <a data-toggle="collapse" data-parent="#accordion" href="#ascorer" aria-expanded="true" aria-controls="collapseOne">
+                    Details
+                </a>
+                <div class="table-responsive">
+                    <table style="border:1px solid black" class="table collapse" width="250" cellspacing="0" cellpadding="0" id="ascorer" align="center">
+                        <tr><td> </td><td><b>game stats</b></td></tr>
+                        @{
+                            int j = 0;
+
+                            foreach (var s in awayScorers)
+                            {
+
+                                <tr><td><h6><span class="label label-success">goal</span>@s.playerName</h6> </td></tr>
+                                    <tr><td><input type="hidden" name="awayscorer" value="@s.playerId" /></td></tr>
+                                j++;
+                            }
+
+                            foreach (var y in awayYellows)
+                            {
+                                <tr><td><h6><span class="label label-warning">yellow card</span>@y.playerName</h6>  </td></tr>
+                                    <tr><td><input type="hidden" name="awayyellowcards" value="@y.playerId" /></td></tr>
+                            }
+
+                            foreach (var r in awayReds)
+                            {
+                                <tr><td><h6><span class="label label-danger">red card</span>@r.playerName</h6>  </td></tr>
+                                    <tr><td><input type="hidden" name="awayredcards" value="@r.playerId" /></td></tr>
+                            }
+                            <tr><td><h6><span class="label label-info">*</span>@motm.playerName</h6>  </td></tr>
+                                <tr><td><input type="hidden" name="motm" value="@motm.playerId" /></td></tr>
+                        }
+                    </table>
+                </div>
+
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Continue" class="button" />
+            </div>
+        </div>
+
+            }
+
+
+
+

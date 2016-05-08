@@ -17,12 +17,12 @@ namespace testfan2.Models
         public int PlayerID { get; set; }
 
         //Player's name
-        [Display(Name = "Player's First name")]
+        [Display(Name = "Player's Surname")]
         [Required(ErrorMessage = "You must enter a Player's name")]
         public String PlayerSurname { get; set; }
 
         //Player's name
-        [Display(Name = "Player's Surname")]
+        [Display(Name = "Player's First name")]
         [Required(ErrorMessage = "You must enter a Player's name")]
         public String PlayerFirstname { get; set; }
 

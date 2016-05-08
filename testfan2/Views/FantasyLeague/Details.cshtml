@@ -8,7 +8,10 @@
         border-color: #729ea5;
         border-collapse: collapse;
     }
+    dt{
+        font-weight: bold;
 
+    }
         .tftable th {
             font-size: 12px;
             background-color: #acc8cc;
@@ -39,21 +42,21 @@
         }
 </style>
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title= "League Table";
 }
 
-<h2>Details</h2>
+<h2>Standings</h2>
 <body>
     <div>
-        <h4>FantasyLeague</h4>
+        <h4>Fantasy League</h4>
         <hr />
         <dl class="dl-horizontal">
             <dt>
-                @Html.DisplayNameFor(model => model.FantasyLeagueName)
+                @Html.DisplayFor(model => model.FantasyLeagueName)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.FantasyLeagueName)
+               
             </dd>
 
         </dl>
@@ -77,7 +80,7 @@
         {
             int i = 0;
             var teams = (from r in Model.FantasyTeams
-                         select r).OrderByDescending(f => f.FirstRoundScore);
+                         select r).OrderByDescending(f => f.OverallScore);
             foreach (var team in teams)
             {
                 i++;
@@ -92,11 +95,12 @@
 
                     <td>
 
-                        @Html.DisplayFor(modelItem => team.FirstRoundScore)
+                        @Html.DisplayFor(modelItem => team.OverallScore)
                     </td>
                     <td>
-
-                        @Html.ActionLink("Details", "Details", new { id = team.TeamID })
+                        @Html.ActionLink("rnd 1", "RoundDetails", new { id = team.FantasyLeagueID, round = 0 }) |
+                        @Html.ActionLink("rnd 2", "RoundDetails", new { id = team.FantasyLeagueID , round = 1 }) |
+                        @Html.ActionLink("Overall", "Details", new { id = team.FantasyLeagueID })
 
                     </td>
                 </tr>

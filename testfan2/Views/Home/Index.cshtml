@@ -28,7 +28,6 @@
             }
               
     
-    
         .bg-1 {
             background-color: #1abc9c; /* Green */
             color: #ffffff;
@@ -45,24 +44,24 @@
         }
      #box1, #box2, #box3 {
 		padding:10px;
-		border:1px solid #bbb;
+		border:5px solid #2ecc71;
 		position:absolute;
 		margin-top:10px;
 		height:150px;
         float:left;
 	}
      	#box1 {
-		margin-left:12px;
-		width:240px;
+		margin-left:2px;
+		width:300px;
 
 	}
 	#box2 {
-		margin-left:244px;
-		width:240px;
+		margin-left:344px;
+		width:300px;
 	}
 	#box3 {
-		margin-left:476px;
-		width:242px;
+		margin-left:676px;
+		width:262px;
 	}
         header{
 background-color: #E4DBBF;
@@ -169,9 +168,9 @@ border-color: #70AB8F;
             <div class="container carousel-overlay text-center">
                 <h1>Play Fantasy Football Euro 2016</h1>
 
-                <a class="btn btn-lg btn-success fp-buttons" @Html.ActionLink("Sign Up", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })>
-                    <span class="fa fa-check"></span>
-                </a>
+                <p class="btn btn-lg btn-success fp-buttons"> @Html.ActionLink("Sign Up", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" }) 
+                    <span class="fa fa-check"></span></p>
+                
             </div>
         </div><!-- .carousel -->
         <div class="container-fluid bg-1 text-center">
@@ -185,6 +184,13 @@ border-color: #70AB8F;
     }
     else
     {
+      
+            <audio controls loop autoplay>
+
+                <source src="~/music/Home.mp3" type="audio/mp3">
+                Your browser does not support the audio tag.
+            </audio>
+        
         testfan2.Models.Player[] g = ViewBag.GK; testfan2.Models.Player[] d = ViewBag.DEF;
         testfan2.Models.Player[] m = ViewBag.MID; testfan2.Models.Player[] f = ViewBag.FWD;
         //for (var i = 0; i < p.Length; i++)
@@ -279,25 +285,26 @@ border-color: #70AB8F;
                 </div>
                 <div class="form-group" style="position: absolute; right: 2%; top: 80%;">
                     <div class="col-md-offset-2 col-md-10">
-                        <p style="top: 900px; left: 800px;"><a class="button" @Html.ActionLink("Score", "ViewScore", "FantasyTeam", new { TeamID = Model.TeamID }, null)></a></p>
+                        <p style="top: 900px; left: 800px;" class="button"> @Html.ActionLink("Score", "ViewScore", "FantasyTeam", new { TeamID = Model.TeamID }, null)</p>
                     </div>
                 </div>
                 <div class="form-group" style="position: absolute; right: 15%; top: 80%;">
                     <div class="col-md-offset-2 col-md-10">
-                        <p style="top: 900px; left: 800px;"><a class="button" @Html.ActionLink("Continue", "Index", "Fixture")></a></p>
+                        <p style="top: 900px; left: 800px;" class="button"> @Html.ActionLink("Continue", "Index", "Fixture")</p>
                     </div>
                 </div>
 
             </div>
           @{ 
-              testfan2.Models.PlayerRoundStat[] pl = ViewBag.top5players;
-              testfan2.Models.FantasyTeam[] tm = ViewBag.top5teams;
+                      testfan2.Models.PlayerRoundStat[] pl = ViewBag.top5players;
+                      testfan2.Models.FantasyTeam[] tm = ViewBag.top5teams;
+                      testfan2.ViewModels.TopScorerView[] gl = ViewBag.top5goalscorers;
+                      
               if (pl != null)
-              {
-
+                      {
 
             <div id="box1" class="actionbox ashbox floatleft">
-                <h3>Top Players for Round One</h3>
+                <h5>Top Players for Round One</h5>
                 <h5>@pl[0].Player.PlayerFirstname<text>, </text> @pl[0].Player.PlayerSurname <text>  Points: </text>@pl[0].TotalPoints</h5> <br />
                 <h5>@pl[1].Player.PlayerFirstname<text>, </text> @pl[1].Player.PlayerSurname <text>  Points: </text>@pl[1].TotalPoints</h5> <br />
                 <h5>@pl[2].Player.PlayerFirstname<text>, </text> @pl[2].Player.PlayerSurname <text>  Points: </text>@pl[2].TotalPoints</h5> <br />
@@ -309,17 +316,31 @@ border-color: #70AB8F;
               if (tm != null && tm.Count() > 4)
               {
             <div id="box2" class="actionbox ashbox floatleft">
-                <h3>Top Teams for Round One</h3>
-                <h5>@tm[0].TeamName<text>, </text>  <text>  Points: </text>@tm[0].FirstRoundScore</h5> <br />
-                <h5>@tm[1].TeamName<text>, </text> <text>  Points: </text>@tm[1].FirstRoundScore</h5> <br />
-                <h5>@tm[2].TeamName<text>, </text> <text>  Points: </text>@tm[2].FirstRoundScore</h5> <br />
-                <h5>@tm[3].TeamName<text>, </text> <text>  Points: </text>@tm[3].FirstRoundScore</h5> <br />
-                <h5>@tm[4].TeamName<text>, </text>  <text>  Points: </text>@tm[4].FirstRoundScore</h5> <br />
+                <h5>Top Teams for Overall</h5>
+                <h5>@tm[0].TeamName<text>, </text>  <text>  Points: </text>@tm[0].OverallScore</h5> <br />
+                <h5>@tm[1].TeamName<text>, </text> <text>  Points: </text>@tm[1].OverallScore</h5> <br />
+                <h5>@tm[2].TeamName<text>, </text> <text>  Points: </text>@tm[2].OverallScore</h5> <br />
+                <h5>@tm[3].TeamName<text>, </text> <text>  Points: </text>@tm[3].OverallScore</h5> <br />
+                <h5>@tm[4].TeamName<text>, </text>  <text>  Points: </text>@tm[4].OverallScore</h5> <br />
 
 
             </div>
-                  }
               }
+              if (gl != null)
+              {
+
+                <div id="box3" class="actionbox ashbox floatleft">
+                    <h5>Top Goalscorers</h5>
+                    <h5>@gl[0].playerName<text>, </text> <text>  Goals: </text>@gl[0].Goals</h5> <br />
+                    <h5>@gl[1].playerName<text>, </text> <text>  Goals: </text>@gl[1].Goals</h5> <br />
+                    <h5>@gl[2].playerName<text>, </text> <text>  Goals: </text>@gl[2].Goals</h5> <br />
+                    <h5>@gl[3].playerName<text>, </text> <text>  Goals: </text>@gl[3].Goals</h5> <br />
+                    <h5>@gl[4].playerName<text>, </text> <text>  Goals: </text>@gl[4].Goals</h5> <br />
+                  
+
+                </div>
+              }
+        }
         </div>
             }
     

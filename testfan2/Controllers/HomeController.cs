@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using testfan2.ViewModels;
 using System.Security.Claims;
 using testfan2.Models;
 using System.Data;
@@ -60,8 +61,18 @@ namespace testfan2.Controllers
                             var top5Players = db.PlayerRoundStats.ToList().OrderByDescending(p => p.TotalPoints).Take(5);
                             ViewBag.top5players = top5Players.ToArray();
 
-                            var top5Teams = db.FantasyTeams.ToList().OrderByDescending(t => t.FirstRoundScore).Take(5);
+                            //display top 5 teams overall
+                            var top5Teams = db.FantasyTeams.ToList().OrderByDescending(t => t.OverallScore).Take(5);
                             ViewBag.top5teams = top5Teams.ToArray();
+
+                          
+                            //display top 5 goalscorers
+                            var players = from pl in db.PlayerRoundStats
+                                          group pl by new { pl.PlayerID, pl.Player.PlayerSurname } into pls
+                                          select new TopScorerView { playerId = pls.Key.PlayerID, playerName = pls.Key.PlayerSurname, Goals = pls.Sum(pl => pl.goalScored) };
+                                        ;
+                            var goalscorers = players.OrderByDescending(g => g.Goals).Take(5);
+                            ViewBag.top5goalscorers = goalscorers.ToArray();
                             return View(team);
                         }
                     }

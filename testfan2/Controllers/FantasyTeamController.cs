@@ -96,7 +96,10 @@ namespace testfan2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var fantasyTeam = db.FantasyTeams.Include(p => p.Players).Where(t => t.TeamID == TeamID).Single();
-        
+            var teamName = fantasyTeam.TeamName;
+            var owner = fantasyTeam.User.CustomerFirstName + " " + fantasyTeam.User.CustomerSurname;
+            ViewBag.TeamName = teamName;
+            ViewBag.Owner = owner; 
             //populate view with all players in database
             PopulateTeam(fantasyTeam);
             if (fantasyTeam == null)

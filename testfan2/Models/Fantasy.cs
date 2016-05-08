@@ -142,15 +142,19 @@ namespace testfan2.Models
         public String TeamName { get; set; }
 
         
-        //public int CustomerId { get; set; }
-        //public virtual Customer Customer { get; set; }
-
-        //[Key, Column(Order = 1)]
-        //public string UserId { get; set; }
-        //[ForeignKey("UserId")]
-        //public virtual ApplicationUser User { get; set; }
+     
         public bool IsConfirmed { get; set; }
        public int FirstRoundScore { get; set; }
+        public int SecondRoundScore { get; set; }
+        public int OverallScore
+        {
+            get
+            {
+                return FirstRoundScore + SecondRoundScore;
+            }
+        }
+
+                       
         [ForeignKey("FantasyLeague")]
         [Column(Order = 2)]
         public int FantasyLeagueID { get; set; }

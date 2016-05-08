@@ -41,7 +41,7 @@ namespace FantasyFootball.Tests
             Player p21 = new Player { PlayerFirstname = "Ivo", PlayerSurname = "Toivonen", DateOfBirth = DateTime.Parse("1989-03-12"), PlayerValue = 5.9, Position = Position.Forward, NationCode = "SWE", PlayerID = 021, GoalWeight = .1 };
             Player p22 = new Player { PlayerFirstname = "Zlatan", PlayerSurname = "Ibrahimovic", DateOfBirth = DateTime.Parse("1984-03-12"), PlayerValue = 7.0, Position = Position.Forward, NationCode = "SWE", PlayerID = 022, GoalWeight = .318 };
 
-            Fixture f1 = new Fixture { FixtureId = 003, Venue = Venue.SaintDenis, RoundStage = RoundStage.FirstRound, HomeTeamNationCode = "IRE", AwayTeamNationCode = "SWE", HomeTeamScore = 0, AwayTeamScore = 0, AwayTeamScorer = new List<Player>(), HomeTeamScorer = new List<Player>(), RedCards = new List<Player>(), YellowCards = new List<Player>(), gamePlayed = false };
+           // Fixture f1 = new Fixture { FixtureId = 003, Venue = Venue.SaintDenis, RoundStage = RoundStage.FirstRound, HomeTeamNationCode = "IRE", AwayTeamNationCode = "SWE", HomeTeamScore = 0, AwayTeamScore = 0, AwayTeamScorer = new List<Player>(), HomeTeamScorer = new List<Player>(), RedCards = new List<Player>(), YellowCards = new List<Player>(), gamePlayed = false };
 
         }
 
