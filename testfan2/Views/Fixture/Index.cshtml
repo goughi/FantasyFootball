@@ -190,18 +190,26 @@
 }
 @if (finished == true)
 {
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <p><a class="button" @Html.ActionLink("Make Transfers", "Edit", "FantasyTeam", new { id = ViewBag.TeamId }, null)></a></p>
+    <div class="form-group floatleft">
+        <div class="col-md-offset-2 col-md-2">
+            <p class="button"> @Html.ActionLink("Make Transfers", "Edit", "FantasyTeam", new { id = ViewBag.TeamId }, null)</p>
         </div>
     </div>
     if (ViewBag.RoundStage != null)
     {
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-8">
-            <p><a class="button" @Html.ActionLink(" Play Next Round", "NextRound", new { round = ViewBag.RoundStage + 1 })></a></p>
+        <div class="form-group floatleft">
+            <div class="col-md-offset-2 col-md-2">
+                <p class="button"> @Html.ActionLink(" Play Next Round", "NextRound", new { round = ViewBag.RoundStage + 1 })</p>
+            </div>
         </div>
-    </div>
+    }
+    if (ViewBag.LeagueId != null)
+    {
+        <div class="form-group floatleft">
+            <div class="col-md-offset-2 col-md-2">
+                <p class="button"> @Html.ActionLink(" My Fantasy League", "Details", "FantasyLeague", new { id = ViewBag.LeagueId }, null)</p>
+            </div>
+        </div>
     }
 }
 

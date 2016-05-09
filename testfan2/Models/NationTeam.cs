@@ -10,6 +10,7 @@ namespace testfan2.Models
 {
     public class NationTeam
     {
+        //Three letter code - all capital case - for administrative purposes when creating a new nation team
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         [RegularExpression("([A-Z]{3})", ErrorMessage = "Invalid Nation Code")]
@@ -19,6 +20,7 @@ namespace testfan2.Models
         [Display(Name = "Team")]
         public Nation Nation { get; set; }
 
+        //used on nation details page
         public String CrestPath
         {
             get
@@ -26,6 +28,7 @@ namespace testfan2.Models
                 return "~/Images/" + NationCode + ".JPG";
             }
         }
+        //used for displaying team
         public String JerseyPath
         {
             get
@@ -41,7 +44,7 @@ namespace testfan2.Models
                 return s;
             }
         }
-
+        //each team have a weight(a-d) so when they play each other a B team would have a greater probability of beating a C team
         public TeamGoalWeight TeamGoalWeight { get; set; }
         public virtual ICollection<Fixture> Fixtures { get; set; }
         public virtual ICollection<Player> Players { get; set; }

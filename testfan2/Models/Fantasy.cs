@@ -9,10 +9,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace testfan2.Models
 {
-    //public enum NationCode
-    //{
-    //    IRE, ALB, ESP, ENG, GER, NIR, WAL, ROM, FRA, AUS, BEL, CZE, CRO, HUN, ISL, ITA, POL, POR, RUS, SLO, SWE, TUR, UKR, SUI
-    //}
+   //Player Position
     public enum Position
     {
         [Display(Name = "Defender")]
@@ -24,6 +21,8 @@ namespace testfan2.Models
         [Display(Name = "Forward")]
         Forward
     }
+
+    //Teams playing in Euros
     public enum Nation
     {
         [Display(Name = "Albania")]
@@ -75,6 +74,7 @@ namespace testfan2.Models
         [Display(Name = "Wales")]
         Wales
     }
+    //Venues where games are being  held
     public enum Venue
     {
         SaintDenis, Marseille, Lyon, Lille, Bordeaux, Paris, SaintEtienne, Nice, Lens, Toulouse
@@ -82,47 +82,16 @@ namespace testfan2.Models
     //each nation will be rated a-d for goal probability purposes
     public enum TeamGoalWeight { A, B, C, D }
 
-
+    //Each round will host a number of fixtures
     public enum RoundStage
     {
         FirstRound, SecondRound, ThirdRound, Last16, QuarterFinal, SemiFinal, Final
     }
 
-    public class Customer
-    {
-    //    public int CustomerID { get; set; }
-    //    [Key]
-    //    public string UserId { get; set; }
-
-    //    [ForeignKey("UserId")]
-    //    public virtual ApplicationUser User { get; set; }
-
-    //    [Display(Name = "Surname")]
-    //    [StringLength(50, ErrorMessage = "Surname cannot be longer than 50 characters.")]
-    //    [Required(ErrorMessage ="You must enter a surname")]
-    //    public String CustomerSurname { get; set; }
-      
-    //    [Display(Name = "First Name")]
-    //    [StringLength(50, ErrorMessage = "First name cannot be longer than 50 characters.")]
-    //    [Required(ErrorMessage = "You must enter a firstname")]
-    //    public String CustomerFirstName { get; set; }
-
-    //    [Required(ErrorMessage = "Email is required")]
-    //    [DataType(DataType.EmailAddress)]
-    //    [EmailAddress]
-    //    [Display(Name = "Email")]
-    //    public String CustomerEmail { get; set; }
-
-    //    [Required(ErrorMessage = "Mobile is required")]
-    //    [DataType(DataType.PhoneNumber)]
-    //    [Phone]
-    //    [Display(Name = "Mobile number")]
-    //    public String CustomerPhoneNumber { get; set; }
-    }
-
+    //Each user will create one fantasy team of 11 players
     public class FantasyTeam
     {
-        private const double MaxTeamValue = 100.00;
+       private const double MaxTeamValue = 100.00;
         private const int teamSize = 11;
 
         //Team Id
@@ -135,6 +104,7 @@ namespace testfan2.Models
 
         
         public virtual ApplicationUser User { get; set; }
+
         //Team Name
         [Required(ErrorMessage = "You must enter a Team Name")]
         [StringLength(50, MinimumLength = 3)]
@@ -142,25 +112,30 @@ namespace testfan2.Models
         public String TeamName { get; set; }
 
         
-        //public int CustomerId { get; set; }
-        //public virtual Customer Customer { get; set; }
-
-        //[Key, Column(Order = 1)]
-        //public string UserId { get; set; }
-        //[ForeignKey("UserId")]
-        //public virtual ApplicationUser User { get; set; }
+     
         public bool IsConfirmed { get; set; }
-       public int FirstRoundScore { get; set; }
+        //Teams will have scores for each round and an overall score for league standings
+        public int FirstRoundScore { get; set; }
+        public int SecondRoundScore { get; set; }
+        public int OverallScore
+        {
+            get
+            {
+                return FirstRoundScore + SecondRoundScore;
+            }
+        }
+
+                       
         [ForeignKey("FantasyLeague")]
         [Column(Order = 2)]
         public int FantasyLeagueID { get; set; }
-    
         public virtual FantasyLeague FantasyLeague { get; set; }
 
 
         public virtual ICollection<Player> Players { get; set; }
 
         ApplicationDbContext db = new ApplicationDbContext();
+        //teams must consist of 1 goalkeeper, 4 defenders, 4 midfielders and 2 forwards.. max value will be used at a future date
         public const int maxGk = 1;
         public const int maxDf = 4;
         public const int maxMf = 4;
@@ -215,27 +190,20 @@ namespace testfan2.Models
                 else { throw new ArgumentException("You already have two forwards"); }
             }
         }
-    
 
     }
+    //Fantasy League
     public class FantasyLeague
     {
         public int FantasyLeagueId { get; set; }
         public String FantasyLeagueName { get; set; }
 
 
-        //public int CustomerId { get; set; }
-        //public virtual Customer Customer { get; set; }
-
         public virtual ICollection<FantasyTeam> FantasyTeams { get; set; }
 
     }
 
-
-
-
-
-
+    //PlayerRoundStat calculates the score and stores the details
     public class PlayerRoundStat
     {
         public int PlayerRoundStatID { get; set; }
@@ -248,25 +216,27 @@ namespace testfan2.Models
 
         [Range(0, 90, ErrorMessage = "Player can only play between 0 and 90 minutes")]
         public int MinutesPlayed { get; set; }
-        // public int GoalsScored { get; set; }
-        //public int Assist { get; set; }
         [UIHint("Cleansheet")]
         public bool CleanSheet { get; set; }
-         public int GoalsConceded { get; set; }
-        //public int OwnGoal { get; set; }
+        public int GoalsConceded { get; set; }
         public int goalScored { get; set; }
-        // public int PenaltySaved { get; set; }
-        //public int PenaltyMissed { get; set; }
+       
         [UIHint("yellowcard")]
         public bool YellowCarded { get; set; }
         [UIHint("redcard")]
         public bool RedCarded { get; set; }
         [UIHint("iswin")]
         public bool IsWin { get; set; }
-        // public int Saves { get; set; }
+       
         [UIHint("motm")]
          public bool ManOfTheMatch { get; set; }
 
+        //Points for future use
+        //public int OwnGoal { get; set; }
+        // public int PenaltySaved { get; set; }
+        //public int PenaltyMissed { get; set; }
+        //public int Assist { get; set; }
+        // public int Saves { get; set; }
 
 
         public int TotalPoints
@@ -356,4 +326,3 @@ namespace testfan2.Models
 //  data-show-faces="true">
 //</div>
 
-//classes - customer, fantasy team, fantasy league, credit card details, fantasy player, round, fixture, player, nation, player round stats, kp stats, fw s, def s, m s

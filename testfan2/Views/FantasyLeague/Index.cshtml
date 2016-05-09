@@ -1,18 +1,25 @@
 ﻿@model IEnumerable<testfan2.Models.FantasyLeague>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Leagues";
 }
-
+<style>
+    td,th{
+        border-bottom: solid 5px;
+    }
+    td a:hover{
+        background-color: white;
+    }
+</style>
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add New League", "Create")
 </p>
-<table class="table">
+<table class="actionbox ashbox">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FantasyLeagueName)
+            <h3>League Tables</h3>
         </th>
         <th></th>
     </tr>
@@ -22,11 +29,12 @@
         <td>
             @Html.DisplayFor(modelItem => item.FantasyLeagueName)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.FantasyLeagueId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.FantasyLeagueId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.FantasyLeagueId })
-        </td>
+        <td >
+           
+            <p class="button floatright">
+                @Html.ActionLink("Details", "Details", new { id = item.FantasyLeagueId }) </p>
+               
+</td>
     </tr>
 }
 

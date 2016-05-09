@@ -95,15 +95,14 @@ namespace testfan2.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult Create()
         {
-          //  var id = db.Players.Max(i => i.PlayerID) + 1;
+          
             Player player = new Player() { DateOfBirth = DateTime.Now};
             ViewBag.NationCode = new SelectList(db.NationTeams, "NationCode", "NationCode");
             return View(player);
         }
 
         // POST: Player/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "PlayerID,PlayerFirstname,PlayerSurname,Position,DateOfBirth,PlayerValue,NationCode,GoalWeight")] Player player)
@@ -134,8 +133,7 @@ namespace testfan2.Controllers
         }
 
         // POST: Player/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+      
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "PlayerID,PlayerFirstname,PlayerSurname,Position,DateOfBirth,PlayerValue,NationCode,GoalWeight")] Player player)

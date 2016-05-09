@@ -1,7 +1,124 @@
 ﻿@{
     ViewBag.Title = "About";
 }
+<style type="text/css">
+    .tftable {
+        font-size: 12px;
+        color: #333333;
+        width: 100%;
+        border-width: 1px;
+        border-color: #729ea5;
+        border-collapse: collapse;
+    }
+
+    dt {
+        font-weight: bold;
+    }
+
+    .tftable th {
+        font-size: 12px;
+        background-color: #acc8cc;
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #729ea5;
+        text-align: left;
+    }
+
+    body {
+        background-image: url("Images/LeagueBackgrounds/GroupOfDeath.jpg");
+    }
+
+    .tftable tr {
+        background-color: #d4e3e5;
+    }
+
+    .tftable td {
+        font-size: 12px;
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #729ea5;
+    }
+
+    .tftable tr:hover {
+        background-color: #ffffff;
+    }
+</style>
+
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+<div class="actionbox ashbox">
+    <h3>Register and Sign up today</h3>
+    <h3>Steps</h3>
+</div>
+<div class="actionbox ashbox">
+   
+    <ul>
+        <li>Create a team name</li>
+        <li>Join fantasy league</li>
+        <li>Pick 11 players</li>
+        <li>
+            <ul>
+                <li>1 goalkeeper</li>
+                <li>4 defenders</li>
+                <li>4 midfielders</li>
+                <li>2 forwards</li>
+            </ul>
+        </li>
+        <li>You have a budget of 70 million Euro</li>
+        <li>Save your team to continue</li>
+        <li>Hit continue to play the games live</li>
+        <li>After finishing round one, you can view your standings in the league table to see how you did</li>
+        <li>You can make unlimited transfers after each round</li>
+        <li>Hit play next round to continue</li>
+    </ul>
+</div>
+<div class="actionbox ashbox">
+    <h3>Points System</h3>
+</div>
+<table class="tftable">
+    <tr>
+
+        <th>
+            
+        </th>
+        <th>
+           Points
+        </th>
+    </tr>
+     <tr>
+         <td>Minutes Played less than 60</td>
+         <td>2</td>
+     </tr>
+    <tr>
+         <td>Minutes Played more than 60</td>
+         <td>4</td>
+    </tr>
+    <tr>
+         <td>yellow card</td>
+         <td>-2</td>
+        </tr>
+    <tr>
+         <td>Red card</td>
+         <td>-6</td>
+        </tr>
+    <tr>
+         <td>Cleansheet(defender and keeper only)</td>
+         <td>5</td>
+        </tr>
+    <tr>
+        <td>Goals conceded(defender and keeper only)</td>
+        <td>-1</td>
+    </tr>
+    <tr>
+        <td>Goal scored</td>
+        <td>5</td>
+    </tr>
+    <tr>
+        <td>Man of the match</td>
+        <td>4</td>
+    </tr>
+
+</table>

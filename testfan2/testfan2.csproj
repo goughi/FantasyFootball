@@ -222,9 +222,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605042141256_init.cs" />
-    <Compile Include="Migrations\201605042141256_init.Designer.cs">
-      <DependentUpon>201605042141256_init.cs</DependentUpon>
+    <Compile Include="Migrations\201605091646474_init.cs" />
+    <Compile Include="Migrations\201605091646474_init.Designer.cs">
+      <DependentUpon>201605091646474_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -241,6 +241,7 @@
     <Compile Include="ViewModels\RoundTeamRemoveViewModel.cs" />
     <Compile Include="ViewModels\RoundTeamViewModel.cs" />
     <Compile Include="ViewModels\ScorerIndexData.cs" />
+    <Compile Include="ViewModels\TopScorerView.cs" />
     <Compile Include="ViewModels\ViewPlayers.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -278,11 +279,16 @@
     <Content Include="Images\stadiums\SaintDenis.jpg" />
     <Content Include="Images\stadiums\Toulouse.jpg" />
     <Content Include="music\IRE.mp3" />
+    <Content Include="music\Home.mp3" />
+    <Content Include="music\WAL.mp3" />
     <Content Include="Scripts\addTeam.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ClassDiagram1.cd" />
     <Content Include="app.config" />
+    <None Include="Properties\PublishProfiles\euro2016fantasy - Web Deploy.pubxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -373,6 +379,7 @@
     <Content Include="Views\PlayerRoundStat\ShowTeamData.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Cleansheet.cshtml" />
     <Content Include="Views\Fixture\NextRound.cshtml" />
+    <Content Include="Views\FantasyLeague\RoundDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -387,8 +394,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201605042141256_init.resx">
-      <DependentUpon>201605042141256_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201605091646474_init.resx">
+      <DependentUpon>201605091646474_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

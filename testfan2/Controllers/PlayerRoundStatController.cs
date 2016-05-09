@@ -133,12 +133,8 @@ namespace testfan2.Controllers
                 {
                     var userIdValue = userIdClaim.Value;
 
-
-                    // var user = User.Identity.GetUserId();
                     if (userIdValue != null)
                     {
-                        //var team = new FantasyTeam();
-                        // var stats = db.PlayerRoundStats.ToList().Where(f => f.Fixture.gamePlayed == true && f.Fixture.RoundStage == RoundStage.FirstRound);
                         var fixtures = db.Fixtures.ToList().Where(f => f.gamePlayed == true && f.RoundStage == RoundStage.FirstRound);
                         var team = db.FantasyTeams.Include(t => t.Players).Where(t => t.UserId == userIdValue).FirstOrDefault();
                         if (team != null)
@@ -154,12 +150,11 @@ namespace testfan2.Controllers
                                             goalScored = stat.goalScored, GoalsConceded = stat.GoalsConceded, IsWin = stat.IsWin, ManOfTheMatch = stat.ManOfTheMatch, MinutesPlayed = stat.MinutesPlayed,
                                             PlayerRoundStatID = stat.PlayerRoundStatID, PlayerName = player.PlayerFirstname + ". " + player.PlayerSurname, playerTotal = stat.TotalPoints
                                         });
-                                       // var teamStats = db.PlayerRoundStats.ToList().Where(st => st.FixtureId == fixtureId && st.PlayerID == player.PlayerID).Single();
+                                     
                                     }
-                                    // var teamStats = db.PlayerRoundStats.Where(t=>t.PlayerID == playerIds)
+                                   
                                     return View(playerStats.ToList());
-                                
-                            
+
                         }
                     }
                   

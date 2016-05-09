@@ -43,10 +43,10 @@ function chkcontrol(j) {
             return false;
         }
 
-        if (sum > 100) {
+        if (sum > 70) {
             sum = sum - parseFloat(document.form1.def[j].id);
             document.form1.def[j].checked = false;
-            alert("Sum of the selection can't be more than 100 million");
+            alert("Sum of the selection can't be more than 70 million");
             document.getElementById("msg").innerHTML = "Sum :" + sum.toFixed(2);
             return false;
         }
@@ -79,10 +79,10 @@ function chkcontrol(j) {
         }
 
 
-        if (sum > 100) {
+        if (sum > 70) {
             sum = sum - parseFloat(document.form1.gk[j].id);
             document.form1.gk[j].checked = false;
-            alert("Sum of the selection can't be more than 100 million");
+            alert("Sum of the selection can't be more than 70 million");
             document.getElementById("msg").innerHTML = "Sum :" + sum.toFixed(2);
             return;
         }
@@ -110,10 +110,10 @@ function chkcontrol(j) {
         }
 
 
-        if (sum > 100) {
+        if (sum > 70) {
             sum = sum - parseFloat(document.form1.mid[j].id);
             document.form1.mid[j].checked = false;
-            alert("Sum of the selection can't be more than 100 million");
+            alert("Sum of the selection can't be more than 70 million");
             document.getElementById("msg").innerHTML = "Sum :" + sum.toFixed(2);
             return;
         }
@@ -145,10 +145,10 @@ function chkcontrol(j) {
         }
 
 
-        if (sum > 100) {
+        if (sum > 70) {
             sum = sum - parseInt(document.form1.fwd[j].id);
             document.getElementById.fwd[j].checked = false;
-            alert("Sum of the selection can't be more than 100 million");
+            alert("Sum of the selection can't be more than 70 million");
             document.getElementById("msg").innerHTML = "Sum :" + sum.toFixed(2);
             return;
         }

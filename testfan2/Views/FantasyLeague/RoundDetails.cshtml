@@ -1,0 +1,147 @@
+﻿@model testfan2.Models.FantasyLeague
+<style type="text/css">
+    .tftable {
+        font-size: 12px;
+        color: #333333;
+        width: 100%;
+        border-width: 1px;
+        border-color: #729ea5;
+        border-collapse: collapse;
+    }
+
+        .tftable th {
+            font-size: 12px;
+            background-color: #acc8cc;
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #729ea5;
+            text-align: left;
+        }
+
+    body {
+        background-image: url("Images/LeagueBackgrounds/GroupOfDeath.jpg");
+    }
+
+    .tftable tr {
+        background-color: #d4e3e5;
+    }
+
+    .tftable td {
+        font-size: 12px;
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #729ea5;
+    }
+
+    .tftable tr:hover {
+        background-color: #ffffff;
+    }
+</style>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Standings</h2>
+<body>
+    <div>
+
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.FantasyLeagueName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FantasyLeagueName)
+            </dd>
+
+        </dl>
+    </div>
+    <table class="tftable">
+        <tr>
+
+            <th>
+                Position
+            </th>
+            <th>
+                Team
+            </th>
+            <th>
+                Score
+            </th>
+
+            <th></th>
+        </tr>
+        @if (Model.FantasyTeams != null && ViewBag.Round != null)
+        {
+            int i = 0;
+            if (ViewBag.Round == 0)
+            {
+                var teams = (from r in Model.FantasyTeams
+                             select r).OrderByDescending(f => f.FirstRoundScore);
+
+
+                foreach (var team in teams)
+                {
+                    i++;
+                    <tr>
+                        <td>
+
+                            <p>@i</p>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => team.TeamName)
+                        </td>
+
+                        <td>
+
+                            @Html.DisplayFor(modelItem => team.FirstRoundScore)
+                        </td>
+                        <td>
+
+                            @Html.ActionLink("rnd 2", "RoundDetails", new { id = team.FantasyLeagueID, round = 1 }) |
+                            @Html.ActionLink("Overall", "Details", new { id = team.FantasyLeagueID })
+                        </td>
+                    </tr>
+                }
+            }
+            if (ViewBag.Round == 1)
+            {
+                var teams = (from r in Model.FantasyTeams
+                             select r).OrderByDescending(f => f.SecondRoundScore);
+
+
+                foreach (var team in teams)
+                {
+                    i++;
+                    <tr>
+                        <td>
+
+                            <p>@i</p>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => team.TeamName)
+                        </td>
+
+                        <td>
+
+                            @Html.DisplayFor(modelItem => team.SecondRoundScore)
+                        </td>
+                        <td>
+
+                            @Html.ActionLink("rnd 1", "RoundDetails", new { id = team.FantasyLeagueID, round = 0 }) |
+                            @Html.ActionLink("Overall", "Details", new { id = team.FantasyLeagueID })
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    </table>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.FantasyLeagueId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+

@@ -5,8 +5,7 @@ using System.Collections.Generic;
 using testfan2.Controllers;
 using System.Web.Mvc;
 using System.Net;
-using System.Linq;
-using System.Text;
+
 
 namespace FantasyFootball.Tests
 { 
@@ -41,7 +40,7 @@ namespace FantasyFootball.Tests
             Player p21 = new Player { PlayerFirstname = "Ivo", PlayerSurname = "Toivonen", DateOfBirth = DateTime.Parse("1989-03-12"), PlayerValue = 5.9, Position = Position.Forward, NationCode = "SWE", PlayerID = 021, GoalWeight = .1 };
             Player p22 = new Player { PlayerFirstname = "Zlatan", PlayerSurname = "Ibrahimovic", DateOfBirth = DateTime.Parse("1984-03-12"), PlayerValue = 7.0, Position = Position.Forward, NationCode = "SWE", PlayerID = 022, GoalWeight = .318 };
 
-            Fixture f1 = new Fixture { FixtureId = 003, Venue = Venue.SaintDenis, RoundStage = RoundStage.FirstRound, HomeTeamNationCode = "IRE", AwayTeamNationCode = "SWE", HomeTeamScore = 0, AwayTeamScore = 0, AwayTeamScorer = new List<Player>(), HomeTeamScorer = new List<Player>(), RedCards = new List<Player>(), YellowCards = new List<Player>(), gamePlayed = false };
+           // Fixture f1 = new Fixture { FixtureId = 003, Venue = Venue.SaintDenis, RoundStage = RoundStage.FirstRound, HomeTeamNationCode = "IRE", AwayTeamNationCode = "SWE", HomeTeamScore = 0, AwayTeamScore = 0, AwayTeamScorer = new List<Player>(), HomeTeamScorer = new List<Player>(), RedCards = new List<Player>(), YellowCards = new List<Player>(), gamePlayed = false };
 
         }
 
@@ -147,30 +146,7 @@ namespace FantasyFootball.Tests
             Assert.AreEqual(2, prs1.TotalPoints);
             Assert.AreEqual(9, prs2.TotalPoints);
         }
-        //[TestMethod]
-        //public void testPlayerControllerIndex()
-        //{
-        //    Player p23 = new Player() { PlayerFirstname = "Andreas", PlayerSurname = "Isaksson", DateOfBirth = DateTime.Parse("1987-08-10"), PlayerValue = 5.0, Position = Position.GoalKeeper, NationCode = "SWE", PlayerID = 012, GoalWeight = .002 };
-        //    Player p22 = new Player() { PlayerFirstname = "Zlatan", PlayerSurname = "Ibrahimovic", DateOfBirth = DateTime.Parse("1984-03-12"), PlayerValue = 7.0, Position = Position.Forward, NationCode = "SWE", PlayerID = 022, GoalWeight = .318 };
-        //    var controller = new PlayerController();
-        //    var result = controller.Index(null, "ib", null, null) as ViewResult;
-        //    var player = (IEnumerable<Player>)result.ViewData.Model;
-
-        //    CollectionAssert.Contains(player.ToList(), p22);
-
-
-        //}
-
-        //[TestMethod]
-        //public void testFixtureControllerIndex()
-        //{
-        //    Fixture f1 = new Fixture { FixtureId = 003, Venue = Venue.SaintDenis, RoundStage = RoundStage.FirstRound, HomeTeamNationCode = "IRE", AwayTeamNationCode = "SWE", HomeTeamScore = 0, AwayTeamScore = 0, AwayTeamScorer = new List<Player>(), HomeTeamScorer = new List<Player>(), RedCards = new List<Player>(), YellowCards = new List<Player>(), gamePlayed = false };
-        //    var controller = new FixtureController();
-        //    var result = controller.Details(f1.FixtureId) as ViewResult;
-
-
-
-        //}
+      
 
         [TestMethod]
         public void testPlayGame()
@@ -183,27 +159,7 @@ namespace FantasyFootball.Tests
             _target.Equals(new HttpStatusCodeResult(HttpStatusCode.OK));
         }
 
-        //[TestMethod]
-        //public void testPlayGameWithNumber()
-        //{
-        //    Fixture f1 = new Fixture { FixtureId = 003, Venue = Venue.SaintDenis, RoundStage = RoundStage.FirstRound, HomeTeamNationCode = "IRE", AwayTeamNationCode = "SWE", HomeTeamScore = 0, AwayTeamScore = 0, AwayTeamScorer = new List<Player>(), HomeTeamScorer = new List<Player>(), RedCards = new List<Player>(), YellowCards = new List<Player>(), gamePlayed = false };
-        //    var controller = new FixtureController();
-        //    var output = controller.populateGameDetails(1,2, f1, a, b);
-        //    output.Equals(true);
-        //    //_target.Equals(new HttpStatusCodeResult(HttpStatusCode.OK));
-        //}
 
-        //[TestMethod]
-        //public void IndexPlayer()
-        //{
-        //    Player p22 = new Player { PlayerFirstname = "Zlatan", PlayerSurname = "Ibrahimovic", DateOfBirth = DateTime.Parse("1984-03-12"), PlayerValue = 7.0, Position = Position.Forward, NationCode = "SWE", PlayerID = 022, GoalWeight = .318 };
-        //    var controller = new PlayerController();
-        //    ViewResult result = controller.Index(null,"Zlatan",null,1) as ViewResult;
-
-        //    // Assert.AreEqual("fixture", _target.ViewName);
-        //    Assert.IsNotNull(result);
-
-
-        //}
+      
     }
 }

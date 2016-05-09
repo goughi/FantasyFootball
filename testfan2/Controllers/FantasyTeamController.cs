@@ -64,12 +64,8 @@ namespace testfan2.Controllers
             var fantasyTeam = new FantasyTeam();
             fantasyTeam.Players = new List<Player>();
             fantasyTeam.IsConfirmed = false;
-            // PopulateTeam(fantasyTeam);
-
-
 
             fantasyTeam.UserId = db.Users.Where(c => c.Id == CustomerID).Single().Id;
-          //  ViewBag.CustomerName = db.Customers.Where(c => c.CustomerID == CustomerID).Single().CustomerFirstName;
             ViewBag.FantasyLeagueID = new SelectList(db.FantasyLeagues, "FantasyLeagueId", "FantasyLeagueName");
             return View(fantasyTeam);
         }
@@ -96,7 +92,10 @@ namespace testfan2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var fantasyTeam = db.FantasyTeams.Include(p => p.Players).Where(t => t.TeamID == TeamID).Single();
-        
+            var teamName = fantasyTeam.TeamName;
+            var owner = fantasyTeam.User.CustomerFirstName + " " + fantasyTeam.User.CustomerSurname;
+            ViewBag.TeamName = teamName;
+            ViewBag.Owner = owner; 
             //populate view with all players in database
             PopulateTeam(fantasyTeam);
             if (fantasyTeam == null)
@@ -106,23 +105,6 @@ namespace testfan2.Controllers
             return View(fantasyTeam);
         }
         
-        private void populatePitch(int? id)
-        {
-
-            //var gk = new List<Player>();
-            var fantasyTeam = db.FantasyTeams.FirstOrDefault(t => t.TeamID == id);
-            fantasyTeam.Players = new List<Player>();
-            fantasyTeam.IsConfirmed = true;
-             var gk = fantasyTeam.Players.ToList().Where(p => p.Position == Position.GoalKeeper).SingleOrDefault();
-            var def = fantasyTeam.Players.ToList().Where(p => p.Position == Position.Defender);
-
-            if (gk != null)
-            {
-                ViewBag.GK = gk;
-            }
-            ViewBag.DEF = def;  
-               
-        }
         // POST: FantasyTeam/AddTeam/ TeamID, string[] def, string[] mid, string[]fwd, string[]gk  
         // team should consist of a string array of one goalkeeper, an array of four defenders, an array of four midfielders and an array of two forwards
         [HttpPost]
@@ -160,8 +142,7 @@ namespace testfan2.Controllers
                         {
                             if (!fantasyPlayers.Contains(player.PlayerID))
                             {
-                                teamToAddPlayers.Players.Add(player);
-                                //teamToAddPlayers.AddPlayer(player);
+                                teamToAddPlayers.Players.Add(player);                         
                             }
                         }
                         else
@@ -183,19 +164,12 @@ namespace testfan2.Controllers
                 catch(ArgumentException e)
                 {
                     e.Message.ToString();
-
                 }
-
-
             }
-            populatePitch(TeamID);
-            return RedirectToAction("Index","Home");
-            //return RedirectToAction("AddTeam", new { TeamID = teamToAddPlayers.TeamID });
-            
+            //(TeamID);
+            return RedirectToAction("Index","Home"); 
         }
         
- 
-       
         // GET: FantasyTeam/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -213,7 +187,7 @@ namespace testfan2.Controllers
            
             return View(fantasyTeam);
         }
-
+        //all players in database are shown in view under the following categories - goalkeeper, defender, midfielder and forward
         private void PopulateTeam(FantasyTeam fantasyTeam)
         {
             var goalkeepers = db.Players.ToList().Where(p => p.Position == Position.GoalKeeper);
@@ -274,8 +248,7 @@ namespace testfan2.Controllers
         }
 
         // POST: FantasyTeam/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Edit is used to make transfers for team
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int? id, string[] def, string[] mid, string[] fwd, string[] gk)
@@ -313,7 +286,7 @@ namespace testfan2.Controllers
                             if (!fantasyPlayers.Contains(player.PlayerID))
                             {
                                 teamToAddPlayers.Players.Add(player);
-                                //teamToAddPlayers.AddPlayer(player);
+                               
                             }
                         }
                         else
@@ -338,9 +311,10 @@ namespace testfan2.Controllers
 
                 }
             }
-            populatePitch(id);
+            
             return RedirectToAction("Index", "Home");
         }
+        //UpdateFantasyPlayers checks to see if the checked player has already been added. If not this player is then added to team
         private void UpdateFantasyPlayers(string[] selectedPlayers, FantasyTeam fantasyTeamToUpdate)
         {
             if (selectedPlayers == null)
@@ -377,14 +351,13 @@ namespace testfan2.Controllers
             db.SaveChanges();
         }
 
-        //Get: ViewScore/round1
+        //Get: ViewScore/round1 - viewscore shows the players score for round one of this person's fantasy team
         public ActionResult ViewScore(int? TeamID)
         {
             if (TeamID == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-           // var fantasyTeam = db.FantasyTeams.FirstOrDefault(t => t.TeamID == TeamID);
       
             var fixtures = db.Fixtures.ToList().Where(f => f.gamePlayed == true && f.RoundStage == RoundStage.FirstRound);
             var fantasyTeam = db.FantasyTeams.Include(t=>t.Players).Where(t => t.TeamID == TeamID).SingleOrDefault();
@@ -405,7 +378,7 @@ namespace testfan2.Controllers
                     {
                         viewModel.Add(new FantasyTeamScoreUpdate
                         {
-                            // FantasyTeamName = fantasyTeam.TeamName,
+                           
                             PlayerName = p.PlayerFirstname + " " + p.PlayerSurname,
                             Position = p.Position,
                             Team = p.NationCode,
